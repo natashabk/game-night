@@ -35,7 +35,7 @@ const App = () => {
               <Timer
                 size={110}
                 fontSize={20}
-                minutes={1.5}
+                minutes={2}
                 fillColor={'#65b0d3'}
                 bgColor={'white'}
                 showMs={false}
