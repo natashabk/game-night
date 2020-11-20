@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Table, Input, Typography, Checkbox } from 'antd';
 const { Text, Title } = Typography
 

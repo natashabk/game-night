@@ -25,6 +25,7 @@ const CircleTimer = ( { size, fontSize, minutes, fillColor, bgColor, showMs, onC
 
   useEffect( () => {
     if ( count > 0 ) { running ? startTimer() : stopTimer() }
+    // eslint-disable-next-line
   }, [ running ] )
 
   useEffect( () => {
