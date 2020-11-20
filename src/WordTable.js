@@ -1,6 +1,6 @@
-import React from 'react';
-import { Table, Input, Typography } from 'antd';
-const { Text } = Typography
+import React, { useState, useEffect } from 'react';
+import { Table, Input, Typography, Checkbox } from 'antd';
+const { Text, Title } = Typography
 
 const categories = [
   [
@@ -110,6 +110,13 @@ const categories = [
 const header = { fontWeight: 600, fontSize: 20, color: '#b67d94', }
 
 const WordTable = ( { round, locked } ) => {
+  const [ total, setTotal ] = useState( 15 )
+
+  const handlePointChange = ( e ) => {
+    const point = e.target.checked
+    if ( point ) setTotal( total + 1 )
+    else setTotal( total - 1 )
+  }
   const data = categories[ round - 1 ].map( word => ( { key: word, category: word } ) )
   const columns = [
     {
@@ -123,17 +130,28 @@ const WordTable = ( { round, locked } ) => {
       dataIndex: 'answer',
       width: 500,
       render: () => <Input allowClear disabled={locked} />
+    },
+    {
+      title: 'Point',
+      dataIndex: 'point',
+      render: () => {
+        return ( <Checkbox disabled={!locked} defaultChecked={true} onChange={handlePointChange} /> )
+      }
     }
   ];
 
   return (
-    <Table
-      columns={columns}
-      dataSource={data}
-      pagination={false}
-      bordered={true}
-      style={{ maxWidth: 'fit-content' }}
-    />
+    <>
+      <Table
+        columns={columns}
+        dataSource={data}
+        pagination={false}
+        bordered={true}
+        style={{ maxWidth: 'fit-content' }}
+      />
+      {locked ? <Title level={1} style={{ color: 'white', textAlign: 'center' }}>ROUND TOTAL: {total}</Title> : null}
+
+    </>
   )
 }
 

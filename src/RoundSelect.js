@@ -1,10 +1,14 @@
 import { Radio } from 'antd';
 
-const RoundSelect = ( { round, setRound } ) => {
+const RoundSelect = ( { round, setRound, setLocked } ) => {
   return (
     <Radio.Group
       style={{ display: 'inline-grid', marginBottom: 30 }}
-      value={round} onChange={( e ) => setRound( e.target.value )}
+      value={round}
+      onChange={( e ) => {
+        setRound( e.target.value )
+        setLocked( false )
+      }}
     >
       <Radio.Button value={0}>Instructions</Radio.Button>
       <Radio.Button value={1}>Round 1</Radio.Button>
