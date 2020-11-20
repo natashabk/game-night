@@ -25,7 +25,7 @@ const App = () => {
   return (
     <Layout style={noBg}>
       <Header style={{ ...noBg, marginTop: 30 }}>
-        <Title level={1} style={{ color: 'white', textAlign: 'center' }}>SCATTERGORIES</Title>
+        <Title level={1} style={{ color: 'white', textAlign: 'center', maxWidth: 1300 }}>SCATTERGORIES</Title>
       </Header>
       <Layout style={noBg}>
         <Sider style={{ background: 'none', marginTop: 30 }}>

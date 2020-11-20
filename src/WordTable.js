@@ -149,8 +149,7 @@ const WordTable = ( { round, locked } ) => {
         bordered={true}
         style={{ maxWidth: 'fit-content' }}
       />
-      {locked ? <Title level={1} style={{ color: 'white', textAlign: 'center' }}>ROUND TOTAL: {total}</Title> : null}
-
+      {locked ? <Title level={1} style={{ color: 'white', textAlign: 'center', maxWidth: 1300 }}>ROUND TOTAL: {total}</Title> : null}
     </>
   )
 }
