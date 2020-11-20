@@ -27,15 +27,22 @@ const Scoreboard = ( { scores, setScores } ) => {
   }
 
   const newPlayer = ( input ) => {
-    console.log( 'newPlayer run' )
-    let newScores = scores || []
-    newScores.push( { name: input.target.value, score: 0 } )
+    console.log( 'newPlayer ran' )
+    console.log( 'scores', scores )
+    const scoreObject = {
+      name: input.target.value,
+      score: 0
+    }
+    let newScores = [ ...scores, scoreObject ]
+    console.log( `newScores: ${ newScores }` )
+    console.log( `scores after updating`, scores )
     setScores( newScores )
   }
 
   const scoreList = () => {
-    if ( scores ) return scores.map( ( person, idx ) => (
-      <Row style={rowStyle}>
+    console.log( 'scoreList ran' )
+    return scores.map( ( person, idx ) => (
+      <Row style={rowStyle} key={person.name}>
         <Avatar style={{ background: bgColors[ idx ] }} icon={icons[ idx ]} />
         <Text style={{ color: 'white', fontSize: 20 }}>{person.name}</Text>
         <InputNumber defaultValue={person.score} onChange={onChange} id={idx} />

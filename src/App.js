@@ -14,7 +14,7 @@ const App = () => {
   const [ round, setRound ] = useState( 0 )
   const [ letter, setLetter ] = useState( '-' )
   const [ locked, setLocked ] = useState( false )
-  const [ scores, setScores ] = useState()
+  const [ scores, setScores ] = useState( [] )
 
   const content = () => {
     if ( round ) return <WordTable round={round} locked={locked} />
@@ -25,7 +25,7 @@ const App = () => {
   return (
     <Layout style={noBg}>
       <Header style={{ ...noBg, marginTop: 30 }}>
-        <Title level={1} style={{ color: 'white', textAlign: 'center' }}>SCATTERGORIES</Title>
+        <Title level={1} style={{ color: 'white', textAlign: 'center' }}>{scores.length}SCATTERGORIES</Title>
       </Header>
       <Layout style={noBg}>
         <Sider style={{ background: 'none', marginTop: 30 }}>
