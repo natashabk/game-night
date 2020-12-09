@@ -16,6 +16,8 @@
 
 .wrap {
   position: relative;
+  background: white;
+  border-radius: 100%;
 }
 
 .time {

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Layout, Typography, } from 'antd';
+import Timer from 'simple-circle-timer'
+
 import RoundSelect from './RoundSelect';
 import WordTable from './WordTable';
 import Instructions from './Instructions';
-import Timer from './Timer';
 import Scoreboard from './Scoreboard';
 const { Header, Sider, Content } = Layout;
 const { Title, } = Typography;
@@ -39,11 +40,11 @@ const App = () => {
                 fillColor={'#65b0d3'}
                 bgColor={'white'}
                 showMs={false}
-                onComplete={() => setLocked( true )}
+                // onComplete={() => setLocked( true )}
                 completeMsg={'✓'}
                 running={true}
-                timeAtLoad={Date.now()}
-              /> : null
+              />
+              : null
             }
           </div>
         </Sider>
