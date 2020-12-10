@@ -1,56 +1,46 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Provider, useSelector } from 'react-redux';
 import { Layout, Typography, } from 'antd';
-import Timer from 'simple-circle-timer'
-
-import RoundSelect from './RoundSelect';
-import WordTable from './WordTable';
-import Instructions from './Instructions';
-import Scoreboard from './Scoreboard';
+import SignIn from './SignIn'
+import Chat from './Room'
+import './App.css';
+import { WebSocketProvider, store } from './utils';
+import Scattergories from './Scattergories/Scattergories';
 const { Header, Sider, Content } = Layout;
-const { Title, } = Typography;
+const { Title } = Typography;
 
-const noBg = { background: 'none' }
+const titleStyle = { color: 'white', textAlign: 'center', maxWidth: 1300 }
 
 const App = () => {
-  const [ round, setRound ] = useState( 0 )
-  const [ letter, setLetter ] = useState( '-' )
-  const [ locked, setLocked ] = useState( false )
-  const [ scores, setScores ] = useState( [] )
-
-  const content = () => {
-    if ( round ) return <WordTable round={round} locked={locked} />
-    else if ( round === 0 ) return <Instructions letter={letter} setLetter={setLetter} />
-    else return <Scoreboard scores={scores} setScores={setScores} />
-  }
-
+  const currentRoom = useSelector( state => state.room );
+  if ( !currentRoom ) return <SignIn />
   return (
-    <Layout style={noBg}>
-      <Header style={{ ...noBg, marginTop: 30 }}>
-        <Title level={1} style={{ color: 'white', textAlign: 'center', maxWidth: 1300 }}>SCATTERGORIES</Title>
-      </Header>
-      <Layout style={noBg}>
-        <Sider style={{ background: 'none', marginTop: 30 }}>
-          <div style={{ position: 'fixed' }}>
-            <RoundSelect round={round} setRound={setRound} setLocked={setLocked} />
-            {round ?
-              <Timer
-                size={110}
-                fontSize={20}
-                minutes={2}
-                fillColor={'#65b0d3'}
-                bgColor={'white'}
-                showMs={false}
-                // onComplete={() => setLocked( true )}
-                completeMsg={'✓'}
-                running={true}
-              />
-              : null
-            }
-          </div>
-        </Sider>
-        <Content style={{ padding: 30 }}>{content()}</Content>
-      </Layout>
+    <Layout>
+      <Sider style={{ background: 'none', marginTop: 30 }}>
+
+      </Sider>
+      <Content style={{ padding: 30 }}>
+        <Scattergories />
+      </Content>
+      <Sider>
+        <Chat />
+      </Sider>
     </Layout>
   )
 }
-export default App;
+
+const AppWrapper = () => {
+  return (
+    <Provider store={store}>
+      <WebSocketProvider>
+        <Layout style={{ background: 'none', padding: 30 }}>
+          <Header style={{ background: 'none' }}>
+            <Title level={1} style={titleStyle}>GAME NIGHT</Title>
+          </Header>
+          <App />
+        </Layout>
+      </WebSocketProvider>
+    </Provider>
+  )
+}
+export default AppWrapper
