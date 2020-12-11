@@ -5,7 +5,7 @@ const { Text, Title } = Typography
 
 const header = { fontWeight: 600, fontSize: 20, color: '#b67d94', }
 
-const Game = ( { round, locked } ) => {
+const Board = ( { round, locked } ) => {
   const [ total, setTotal ] = useState( 15 )
 
   const handlePointChange = ( e ) => {
@@ -51,4 +51,4 @@ const Game = ( { round, locked } ) => {
 }
 
 
-export default Game;
+export default Board;

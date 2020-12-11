@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider, useSelector } from 'react-redux';
 import { Layout, Typography, } from 'antd';
 import SignIn from './SignIn'
-import Chat from './Room'
+import Room from './Room'
 import './App.css';
 import { WebSocketProvider, store } from './utils';
 import Scattergories from './Scattergories/Scattergories';
@@ -13,17 +13,19 @@ const titleStyle = { color: 'white', textAlign: 'center', maxWidth: 1300 }
 
 const App = () => {
   const currentRoom = useSelector( state => state.room );
-  if ( !currentRoom ) return <SignIn />
+  const username = useSelector( state => state.username );
+
+  if ( !currentRoom || !username ) return <SignIn />
   return (
     <Layout>
       <Sider style={{ background: 'none', marginTop: 30 }}>
 
       </Sider>
-      <Content style={{ padding: 30 }}>
+      <Content style={{ padding: 30, background: 'none' }}>
         <Scattergories />
       </Content>
       <Sider>
-        <Chat />
+        <Room />
       </Sider>
     </Layout>
   )
