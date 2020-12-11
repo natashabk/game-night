@@ -29,6 +29,7 @@ export default ( { children } ) => {
     socket.on( "event://get-message", ( msg ) => {
       const payload = JSON.parse( msg );
       dispatch( updateChatLog( payload ) );
+      console.log( payload )
     } )
 
     ws = {

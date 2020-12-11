@@ -1,8 +1,8 @@
 import React from 'react';
 import { Provider, useSelector } from 'react-redux';
 import { Layout, Typography, } from 'antd';
-import SignIn from './SignIn'
-import Room from './Room'
+import SignIn from './Login'
+import Chat from './Chat'
 import './App.css';
 import { WebSocketProvider, store } from './utils';
 import Scattergories from './Scattergories/Scattergories';
@@ -18,14 +18,14 @@ const App = () => {
   if ( !currentRoom || !username ) return <SignIn />
   return (
     <Layout>
-      <Sider style={{ background: 'none', marginTop: 30 }}>
+      <Sider theme="light" style={{ background: 'none', marginTop: 30 }}>
 
       </Sider>
       <Content style={{ padding: 30, background: 'none' }}>
         <Scattergories />
       </Content>
-      <Sider>
-        <Room />
+      <Sider theme="light" width={400}>
+        <Chat />
       </Sider>
     </Layout>
   )

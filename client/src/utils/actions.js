@@ -10,6 +10,7 @@ export const JOIN_ROOM_REQUEST = "JOIN_ROOM_REQUEST"
 export const JOIN_ROOM_SUCCESS = "JOIN_ROOM_SUCCESS"
 export const JOIN_ROOM_ERROR = "JOIN_ROOM_ERROR"
 export const SET_USERNAME = "SET_USERNAME"
+export const SET_AVATAR = "SET_AVATAR"
 export const SEND_MESSAGE_REQUEST = "SEND_MESSAGE_REQUEST"
 export const UPDATE_CHAT_LOG = "UPDATE_CHAT_LOG"
 
@@ -18,11 +19,11 @@ const createRoomRequest = () => ( { type: CREATE_ROOM_REQUEST } )
 const createRoomSuccess = ( payload ) => ( { type: CREATE_ROOM_SUCCESS, payload } )
 const createRoomError = ( error ) => ( { type: CREATE_ROOM_ERROR, error } )
 
-export function createRoom( roomName ) {
+export function createRoom( roomName, username, avatar ) {
   return async function ( dispatch ) {
     dispatch( createRoomRequest() );
     try {
-      const response = await axios.get( `${ API_BASE }/room?name=${ roomName }` )
+      const response = await axios.get( `${ API_BASE }/newRoom/${ roomName }/${ username }/${ avatar }` )
       dispatch( createRoomSuccess( response.data ) );
     } catch ( error ) {
       dispatch( createRoomError( error ) );
@@ -34,12 +35,13 @@ const joinRoomRequest = () => ( { type: JOIN_ROOM_REQUEST } )
 const joinRoomSuccess = ( payload ) => ( { type: JOIN_ROOM_SUCCESS, payload } )
 const joinRoomError = ( error ) => ( { type: JOIN_ROOM_ERROR, error } )
 
-export function joinRoom( roomId ) {
+export function joinRoom( roomId, username, avatar ) {
   return async function ( dispatch ) {
     dispatch( joinRoomRequest() );
     try {
-      const response = await axios.get( `${ API_BASE }/room/${ roomId }` )
+      const response = await axios.get( `${ API_BASE }/room/${ roomId }/${ username }/${ avatar }` )
       dispatch( joinRoomSuccess( response.data ) );
+      response.data.chats.forEach( msg => dispatch( updateChatLog( { roomId, data: msg } ) ) )
     } catch ( error ) {
       dispatch( joinRoomError( error ) );
     }
@@ -47,4 +49,5 @@ export function joinRoom( roomId ) {
 }
 
 export const setUsername = ( username ) => ( { type: SET_USERNAME, username } )
+export const setAvatar = ( avatar ) => ( { type: SET_AVATAR, avatar } )
 export const updateChatLog = ( update ) => ( { type: UPDATE_CHAT_LOG, update } )
