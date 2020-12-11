@@ -5,3 +5,13 @@
   background-image: linear-gradient(to bottom right, #ff5454, #4ac9ef);
   font-family: 'Quicksand', sans-serif;
 }
+
+.chatBox {
+  overflow-y: scroll;
+  overscroll-behavior-y: contain;
+  scroll-snap-type: y proximity;
+}
+
+.chatBox > div > div:last-child {
+  scroll-snap-align: end;
+}

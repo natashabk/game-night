@@ -15,27 +15,23 @@ export default ( { children } ) => {
   const dispatch = useDispatch();
 
   const sendMessage = ( roomId, message ) => {
-    const payload = {
-      roomId: roomId,
-      data: message
-    }
+    const payload = { roomId, data: message }
     socket.emit( "event://send-message", JSON.stringify( payload ) );
     dispatch( updateChatLog( payload ) );
   }
 
+  const addPlayer = ( roomId, username, avatar ) => {
+    const payload = { roomId, data: { username, avatar, message: 'has entered the chat' } }
+    socket.emit( "event://add-player", JSON.stringify( payload ) );
+  }
+
   if ( !socket ) {
     socket = io.connect( WS_BASE )
-
     socket.on( "event://get-message", ( msg ) => {
       const payload = JSON.parse( msg );
       dispatch( updateChatLog( payload ) );
-      console.log( payload )
     } )
-
-    ws = {
-      socket: socket,
-      sendMessage
-    }
+    ws = { socket: socket, sendMessage, addPlayer }
   }
 
   return (

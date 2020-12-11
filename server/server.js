@@ -45,20 +45,19 @@ app.get( '/room/:roomId/:username/:avatar', function ( req, res, next ) {
   res.json( response );
 } );
 
-// io.on( 'connection', function ( socket ) {
-//   socket.on( 'event://add-player', function ( player ) {
-//     const payload = JSON.parse( player );
-
-//     if ( chatLogs[ payload.roomID ] ) {
-//       chatLogs[ msg.roomID ].push( payload.data );
-//     }
-
-//     socket.broadcast.emit( 'event://get-player', player );
-//   } )
-// } );
-
 io.on( 'connection', function ( socket ) {
   socket.on( 'event://send-message', function ( msg ) {
+    console.log( 'from socket:', chatLogs )
+    const payload = JSON.parse( msg );
+    if ( chatLogs[ payload.roomId ] ) {
+      chatLogs[ payload.roomId ] = [ ...chatLogs[ payload.roomId ], payload.data ];
+    }
+    socket.broadcast.emit( 'event://get-message', msg );
+  } )
+} );
+
+io.on( 'connection', function ( socket ) {
+  socket.on( 'event://add-player', function ( msg ) {
     console.log( 'from socket:', chatLogs )
     const payload = JSON.parse( msg );
     if ( chatLogs[ payload.roomId ] ) {

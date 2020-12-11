@@ -1,16 +1,8 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react';
 import { Input, Button, Divider, Row } from 'antd';
-import { createRoom, joinRoom } from '../utils';
 import { lightWhite, inputStyle, btnStyle } from './index'
 
-const CreateOrJoinRoom = () => {
-  const [ roomName, setRoomName ] = useState( "" );
-  const [ roomId, setRoomId ] = useState( "" );
-  const username = useSelector( state => state.username );
-  const avatar = useSelector( state => state.avatar );
-  const dispatch = useDispatch();
-
+const CreateOrJoinRoom = ( { setRoomName, setRoomId, setMode } ) => {
   return (
     <>
       <Row>
@@ -18,10 +10,10 @@ const CreateOrJoinRoom = () => {
           size="large"
           placeholder="Create a new room"
           onChange={( e ) => setRoomName( e.target.value )}
-          onPressEnter={() => dispatch( createRoom( roomName ) )}
+          onPressEnter={() => setMode( 'user' )}
           style={inputStyle}
         />
-        <Button type='primary' onClick={() => dispatch( createRoom( roomName, username, avatar ) )} style={btnStyle}>
+        <Button type='primary' onClick={() => setMode( 'user' )} style={btnStyle}>
           Create
         </Button>
       </Row>
@@ -31,10 +23,10 @@ const CreateOrJoinRoom = () => {
           size="large"
           placeholder="Join an existing room"
           onChange={( e ) => setRoomId( e.target.value )}
-          onPressEnter={() => dispatch( joinRoom( roomId ) )}
+          onPressEnter={() => setMode( 'user' )}
           style={inputStyle}
         />
-        <Button type='primary' onClick={() => dispatch( joinRoom( roomId, username, avatar ) )} style={btnStyle}>
+        <Button type='primary' onClick={() => setMode( 'user' )} style={btnStyle}>
           Join
         </Button>
       </Row>

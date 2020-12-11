@@ -1,23 +1,11 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux'
+import React from 'react';
 import { Input, Button, Divider, Row, Radio, Typography } from 'antd';
-import { setUsername, setAvatar } from '../utils';
 import { icons } from '../icons/svg';
 import { lightWhite, inputStyle, btnStyle } from './index'
 const { Text } = Typography
 const iconStyle = { height: 40, width: 40, borderRadius: 6, padding: 0, margin: 0 }
-const randomIcon = () => Object.keys( icons )[ Math.floor( Math.random() * 11 ) ]
 
-const CreateUsername = () => {
-  const [ usernameInput, setUsernameInput ] = useState( "" );
-  const [ iconInput, setIconInput ] = useState( randomIcon() )
-
-  const dispatch = useDispatch();
-  const enterRoom = () => {
-    dispatch( setUsername( usernameInput ) )
-    dispatch( setAvatar( iconInput ) )
-  };
-
+const CreateUsername = ( { setUsernameInput, setIconInput, iconInput, enterRoom } ) => {
   const iconButton = ( item ) => (
     <button
       value={item}
@@ -32,7 +20,6 @@ const CreateUsername = () => {
       {icons[ item ]}
     </button>
   )
-
   return (
     <>
       <Row style={{ minHeight: 70 }}>

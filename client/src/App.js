@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Provider, useSelector } from 'react-redux';
 import { Layout, Typography, } from 'antd';
 import SignIn from './Login'
 import Chat from './Chat'
 import './App.css';
-import { WebSocketProvider, store } from './utils';
+import { WebSocketProvider, store, WebSocketContext } from './utils';
 import Scattergories from './Scattergories/Scattergories';
 const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
@@ -12,10 +12,13 @@ const { Title } = Typography;
 const titleStyle = { color: 'white', textAlign: 'center', maxWidth: 1300 }
 
 const App = () => {
-  const currentRoom = useSelector( state => state.room );
+  const room = useSelector( state => state.room );
   const username = useSelector( state => state.username );
+  const ws = useContext( WebSocketContext );
 
-  if ( !currentRoom || !username ) return <SignIn />
+  if ( !room || !username ) return <SignIn />
+  else ws.addPlayer( room.id, username );
+
   return (
     <Layout>
       <Sider theme="light" style={{ background: 'none', marginTop: 30 }}>
