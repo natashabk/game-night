@@ -11,6 +11,7 @@ import { ReactComponent as Toast } from './toast.svg'
 import { ReactComponent as Tomato } from './tomato.svg'
 import { ReactComponent as Tv } from './tv.svg'
 import { ReactComponent as Umbrella } from './umbrella.svg'
+import { ReactComponent as Logo } from './logo.svg'
 
 const iconStyle = ( { height: '100%', width: '100%' } )
 
