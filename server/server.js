@@ -5,7 +5,8 @@ var http = require( 'http' ).createServer( app );
 var io = require( 'socket.io' )( http );
 
 const cors = require( 'cors' );
-var uuidv4 = require( 'uuid' ).v4;
+
+var shortid = require( 'shortid' )
 
 let rooms = {};
 let chatLogs = {};
@@ -16,9 +17,11 @@ app.use( cors() );
 //creating a room
 app.get( '/newRoom/:roomName/:username/:avatar', function ( req, res, next ) {
   const player = { username: req.params.username, avatar: req.params.avatar }
+  const id = shortid.generate().slice( 0, 5 ).replace( '0', 'A' ) // 0 - O is difficult to distinguish
+
   const room = {
     name: req.query.name,
-    id: uuidv4(),
+    id,
     players: [ player ]
   };
   rooms[ room.id ] = room;
