@@ -11,8 +11,9 @@ export const JOIN_ROOM_SUCCESS = "JOIN_ROOM_SUCCESS"
 export const JOIN_ROOM_ERROR = "JOIN_ROOM_ERROR"
 export const SET_USERNAME = "SET_USERNAME"
 export const SET_AVATAR = "SET_AVATAR"
-export const SEND_MESSAGE_REQUEST = "SEND_MESSAGE_REQUEST"
 export const UPDATE_CHAT_LOG = "UPDATE_CHAT_LOG"
+export const UPDATE_ROOM = "UPDATE_ROOM"
+
 
 // Now we define actions
 const createRoomRequest = () => ( { type: CREATE_ROOM_REQUEST } )
@@ -51,3 +52,4 @@ export function joinRoom( roomId, username, avatar ) {
 export const setUsername = ( username ) => ( { type: SET_USERNAME, username } )
 export const setAvatar = ( avatar ) => ( { type: SET_AVATAR, avatar } )
 export const updateChatLog = ( update ) => ( { type: UPDATE_CHAT_LOG, update } )
+export const updateRoom = ( update ) => ( { type: UPDATE_ROOM, update } )

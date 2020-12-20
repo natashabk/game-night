@@ -8,26 +8,27 @@ const CreateOrJoinRoom = ( { setRoomName, setRoomId, setMode } ) => {
       <Row>
         <Input
           size="large"
-          placeholder="Create a new room"
+          maxLength={20}
+          placeholder="Enter a short name for your group"
           onChange={( e ) => setRoomName( e.target.value )}
           onPressEnter={() => setMode( 'user' )}
           style={inputStyle}
         />
         <Button type='primary' onClick={() => setMode( 'user' )} style={btnStyle}>
-          Create
+          Create new room
         </Button>
       </Row>
       <Divider style={{ background: lightWhite }} />
       <Row>
         <Input
           size="large"
-          placeholder="Join an existing room"
+          placeholder="Enter room ID"
           onChange={( e ) => setRoomId( e.target.value )}
           onPressEnter={() => setMode( 'user' )}
           style={inputStyle}
         />
         <Button type='primary' onClick={() => setMode( 'user' )} style={btnStyle}>
-          Join
+          Join room
         </Button>
       </Row>
     </>

@@ -15,3 +15,7 @@
 .chatBox > div > div:last-child {
   scroll-snap-align: end;
 }
+
+.ant-collapse-content-box {
+  padding: 0px 0px 8px 8px !important;
+}
