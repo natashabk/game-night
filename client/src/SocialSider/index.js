@@ -9,7 +9,7 @@ const SocialSider = () => {
   return (
     <>
       <Heading />
-      <Collapse defaultActiveKey={[ '2' ]} accordion={true}>
+      <Collapse defaultActiveKey={[ '1' ]} accordion={true}>
         <Panel header="Scoreboard" key="1">
           <ScoreBoard />
         </Panel>

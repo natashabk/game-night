@@ -39,6 +39,7 @@ app.get( '/room/:roomId/:username/:avatar', function ( req, res, next ) {
   res.json( { room: rooms[ roomId ], chats: chatLogs[ roomId ] } );
 } );
 
+//websockets that will alert the whole group of events immediately
 io.on( 'connection', function ( socket ) {
   socket.on( 'event://send-message', function ( msg ) {
     const payload = JSON.parse( msg );
@@ -61,6 +62,15 @@ io.on( 'connection', function ( socket ) {
       chats: chatLogs[ payload.room.id ]
     } )
     socket.broadcast.emit( 'event://get-player', response );
+  } )
+} );
+
+io.on( 'connection', function ( socket ) {
+  socket.on( 'event://update-score', function ( msg ) {
+    const payload = JSON.parse( msg );
+    rooms[ payload.roomId ].players[ payload.playerIdx ].score = payload.score
+    const response = JSON.stringify( payload )
+    socket.broadcast.emit( 'event://get-score', response );
   } )
 } );
 

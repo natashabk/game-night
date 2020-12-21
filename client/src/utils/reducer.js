@@ -7,6 +7,7 @@ import {
   SET_AVATAR,
   UPDATE_CHAT_LOG,
   UPDATE_PLAYERS,
+  UPDATE_SCORE
 } from './actions';
 
 const initialState = {
@@ -97,6 +98,23 @@ export default function chatReducer( state, action ) {
         if ( action.update.data ) {
           state.chatLog = [ ...state.chatLog, action.update.data ]
         } else state.chatLog = action.update.chats
+      }
+      break;
+
+    case UPDATE_SCORE:
+      if ( state.room !== null && action.update.roomId === state.room.id ) {
+
+        const updatedPlayer = {
+          ...state.room.players[ action.update.playerIdx ],
+          score: action.update.score
+        }
+
+        console.log( updatedPlayer )
+        let newPlayers = [ ...state.room.players ]
+        console.log( newPlayers )
+        newPlayers[ action.update.playerIdx ] = updatedPlayer
+        console.log( newPlayers )
+        state.room.players = newPlayers
       }
       break;
 
