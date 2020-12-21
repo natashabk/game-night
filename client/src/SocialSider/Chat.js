@@ -20,7 +20,7 @@ const Chat = () => {
   const ws = useContext( WebSocketContext );
 
   const sendMessage = () => {
-    ws.sendMessage( room.id, { username, avatar, message } )
+    ws.sendMessage( room, username, avatar, message )
     setMessage( '' )
   }
 
@@ -28,7 +28,7 @@ const Chat = () => {
     <div>
       <div className='chatBox'>
         <Col style={{ height: "500px", padding: "10px", background: 'white' }}>
-          {chats.map( ( msg, idx ) => <Message key={idx} msg={msg} /> )}
+          {chats ? chats.map( ( msg, idx ) => <Message key={idx} msg={msg} /> ) : null}
         </Col>
       </div>
       <Row style={{ paddingRight: 10 }}>

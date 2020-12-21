@@ -12,7 +12,7 @@ export const JOIN_ROOM_ERROR = "JOIN_ROOM_ERROR"
 export const SET_USERNAME = "SET_USERNAME"
 export const SET_AVATAR = "SET_AVATAR"
 export const UPDATE_CHAT_LOG = "UPDATE_CHAT_LOG"
-export const UPDATE_ROOM = "UPDATE_ROOM"
+export const UPDATE_PLAYERS = "UPDATE_PLAYERS"
 
 
 // Now we define actions
@@ -24,8 +24,11 @@ export function createRoom( roomName, username, avatar ) {
   return async function ( dispatch ) {
     dispatch( createRoomRequest() );
     try {
-      const response = await axios.get( `${ API_BASE }/newRoom/${ roomName }/${ username }/${ avatar }` )
-      dispatch( createRoomSuccess( response.data ) );
+      const resp = await axios.get( `${ API_BASE }/newRoom/${ roomName }/${ username }/${ avatar }` )
+      dispatch( createRoomSuccess( resp.data ) );
+      resp.data.chats.forEach( msg =>
+        dispatch( updateChatLog( { room: resp.data.room, data: msg } ) )
+      )
     } catch ( error ) {
       dispatch( createRoomError( error ) );
     }
@@ -40,9 +43,11 @@ export function joinRoom( roomId, username, avatar ) {
   return async function ( dispatch ) {
     dispatch( joinRoomRequest() );
     try {
-      const response = await axios.get( `${ API_BASE }/room/${ roomId }/${ username }/${ avatar }` )
-      dispatch( joinRoomSuccess( response.data ) );
-      response.data.chats.forEach( msg => dispatch( updateChatLog( { roomId, data: msg } ) ) )
+      const resp = await axios.get( `${ API_BASE }/room/${ roomId }/${ username }/${ avatar }` )
+      dispatch( joinRoomSuccess( resp.data ) );
+      resp.data.chats.forEach( msg =>
+        dispatch( updateChatLog( { room: resp.data.room, data: msg } ) )
+      )
     } catch ( error ) {
       dispatch( joinRoomError( error ) );
     }
@@ -52,4 +57,4 @@ export function joinRoom( roomId, username, avatar ) {
 export const setUsername = ( username ) => ( { type: SET_USERNAME, username } )
 export const setAvatar = ( avatar ) => ( { type: SET_AVATAR, avatar } )
 export const updateChatLog = ( update ) => ( { type: UPDATE_CHAT_LOG, update } )
-export const updateRoom = ( update ) => ( { type: UPDATE_ROOM, update } )
+export const updatePlayers = ( update ) => ( { type: UPDATE_PLAYERS, update } )

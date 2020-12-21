@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
-import { Col, Row, Typography, InputNumber } from 'antd';
+import { Col, Row, Typography } from 'antd';
 import { icons } from '../icons/svg';
 const { Text } = Typography
 

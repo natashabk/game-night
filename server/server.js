@@ -13,66 +13,53 @@ app.use( cors() );
 //creating a room
 app.get( '/newRoom/:roomName/:username/:avatar', function ( req, res, next ) {
   const player = { username: req.params.username, avatar: req.params.avatar, score: 0 }
+  const newPlayerMsg = { ...player, message: 'has entered the chat' }
+
   // id is what other players will be typing in to enter the room so it needs to be easy
   // 0 - O and I - l are difficult to distinguish in the app font
-  const id = shortid.generate().slice( 0, 5 ).replace( /0|O|I|l/gi, 'A' )
-  console.log( 'im creating this player now in CREATE ROOM: ', player )
-  const room = {
-    name: req.params.roomName,
-    id,
-    players: []
-  };
-  rooms[ room.id ] = room;
-  chatLogs[ room.id ] = [];
-  res.json( room );
+  const id = shortid.generate().slice( 0, 7 ).replace( /0|O|I|l/gi, 'A' )
+
+  const room = { name: req.params.roomName, id, players: [ player ] }
+  rooms[ id ] = room;
+  chatLogs[ id ] = [ newPlayerMsg ];
+
+  res.json( { room, chats: [ newPlayerMsg ] } );
 } );
 
 //joining a room
 app.get( '/room/:roomId/:username/:avatar', function ( req, res, next ) {
   const player = { username: req.params.username, avatar: req.params.avatar, score: 0 }
+  const newPlayerMsg = { ...player, message: 'has entered the chat' }
+
   const roomId = req.params.roomId;
-  const newPlayers = [ ...rooms[ roomId ].players, player ]
-  console.log( 'im creating this player now in JOIN ROOM: ', player )
-  const response = {
-    room: {
-      name: rooms[ roomId ].name,
-      id: rooms[ roomId ].id,
-      players: newPlayers
-    },
-    chats: chatLogs[ roomId ]
-  };
-  res.json( response );
+
+  rooms[ roomId ] = { ...rooms[ roomId ], players: [ ...rooms[ roomId ].players, player ] }
+  chatLogs[ roomId ] = [ ...chatLogs[ roomId ], newPlayerMsg ]
+
+  res.json( { room: rooms[ roomId ], chats: chatLogs[ roomId ] } );
 } );
 
 io.on( 'connection', function ( socket ) {
   socket.on( 'event://send-message', function ( msg ) {
     const payload = JSON.parse( msg );
-    if ( chatLogs[ payload.roomId ] ) {
-      chatLogs[ payload.roomId ] = [ ...chatLogs[ payload.roomId ], payload.data ];
+    if ( chatLogs[ payload.room.id ] ) {
+      chatLogs[ payload.room.id ] = [ ...chatLogs[ payload.room.id ], payload.data ];
     }
-    socket.broadcast.emit( 'event://get-message', msg );
+    const response = JSON.stringify( {
+      room: rooms[ payload.room.id ],
+      chats: chatLogs[ payload.room.id ]
+    } )
+    socket.broadcast.emit( 'event://get-message', response );
   } )
 } );
 
 io.on( 'connection', function ( socket ) {
   socket.on( 'event://add-player', function ( msg ) {
     const payload = JSON.parse( msg );
-    const newPlayer = { username: payload.data.username, avatar: payload.data.avatar, score: 0 }
-    //update chat log list for this room
-    if ( chatLogs[ payload.roomId ] ) {
-      chatLogs[ payload.roomId ] = [ ...chatLogs[ payload.roomId ], payload.data ];
-    }
-    //update player list for this room
-    if ( rooms[ payload.roomId ].players ) {
-      rooms[ payload.roomId ].players = [ ...rooms[ payload.roomId ].players, newPlayer ]
-    }
-
-    console.log( 'im in ADDPLAYER now', rooms[ payload.roomId ].players )
     const response = JSON.stringify( {
-      room: rooms[ payload.roomId ],
-      data: payload.data
+      room: rooms[ payload.room.id ],
+      chats: chatLogs[ payload.room.id ]
     } )
-
     socket.broadcast.emit( 'event://get-player', response );
   } )
 } );

@@ -2,7 +2,7 @@ import React, { createContext } from 'react'
 import io from 'socket.io-client';
 import { WS_BASE } from './config';
 import { useDispatch } from 'react-redux';
-import { updateChatLog, updateRoom } from './actions';
+import { updateChatLog, updatePlayers } from './actions';
 
 const WebSocketContext = createContext( null )
 
@@ -14,16 +14,19 @@ export default ( { children } ) => {
 
   const dispatch = useDispatch();
 
-  const sendMessage = ( roomId, message ) => {
-    const payload = { roomId, data: message }
+  const sendMessage = ( room, username, avatar, message ) => {
+    const payload = { room, data: { username, avatar, message } }
     socket.emit( "event://send-message", JSON.stringify( payload ) );
+    //for the user who sent the message - display your msg to yourself as it shows to others
     dispatch( updateChatLog( payload ) );
   }
 
-  const addPlayer = ( roomId, username, avatar ) => {
-    const payload = { roomId, data: { username, avatar, message: 'has entered the chat' } }
+  const addPlayer = ( room, username, avatar ) => {
+    const payload = { room, data: { username, avatar } }
     socket.emit( "event://add-player", JSON.stringify( payload ) );
-    dispatch( updateChatLog( payload ) );
+    //for the user who just joined - display your msg to yourself as it shows to others
+    // const newPlayerMsg = 'has entered the chat'
+    // dispatch( updateChatLog( { ...payload, data: { ...payload.data, message: newPlayerMsg } } ) );
   }
 
   if ( !socket ) {
@@ -34,8 +37,8 @@ export default ( { children } ) => {
     } )
     socket.on( "event://get-player", ( resp ) => {
       const payload = JSON.parse( resp );
-      dispatch( updateChatLog( { roomId: payload.room.id, data: payload.data } ) );
-      dispatch( updateRoom( { newPlayers: payload.room.players } ) )
+      dispatch( updateChatLog( payload ) );
+      dispatch( updatePlayers( payload ) )
     } )
     ws = { socket: socket, sendMessage, addPlayer }
   }

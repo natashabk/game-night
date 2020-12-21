@@ -26,7 +26,7 @@ const App = () => {
 
 
   if ( !room || !username || !avatar ) return <SignIn />
-  else { ws.addPlayer( room.id, username, avatar ) }
+  else { ws.addPlayer( room, username, avatar ) }
 
   return (
     <>

@@ -6,7 +6,7 @@ import {
   SET_USERNAME,
   SET_AVATAR,
   UPDATE_CHAT_LOG,
-  UPDATE_ROOM
+  UPDATE_PLAYERS,
 } from './actions';
 
 const initialState = {
@@ -71,11 +71,13 @@ export default function chatReducer( state, action ) {
 
   switch ( action.type ) {
     case CREATE_ROOM_SUCCESS:
-      state.room = action.payload;
+      state.room = action.payload.room;
+      state.chats = action.payload.chats;
       break;
 
     case JOIN_ROOM_SUCCESS:
       state.room = action.payload.room;
+      state.chats = action.payload.chats;
       break;
 
     case SET_USERNAME:
@@ -86,12 +88,15 @@ export default function chatReducer( state, action ) {
       state.avatar = action.avatar;
       break;
 
-    case UPDATE_ROOM:
-      state.room.players = action.update.newPlayers;
+    case UPDATE_PLAYERS:
+      state.room.players = action.update.room.players;
+      break;
 
     case UPDATE_CHAT_LOG:
-      if ( state.room !== null && action.update.roomId === state.room.id ) {
-        state.chatLog = [ ...state.chatLog, action.update.data ];
+      if ( state.room !== null && action.update.room.id === state.room.id ) {
+        if ( action.update.data ) {
+          state.chatLog = [ ...state.chatLog, action.update.data ]
+        } else state.chatLog = action.update.chats
       }
       break;
 
