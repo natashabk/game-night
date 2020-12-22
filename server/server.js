@@ -55,14 +55,37 @@ io.on( 'connection', function ( socket ) {
 } );
 
 io.on( 'connection', function ( socket ) {
+  let player, roomId;
   socket.on( 'event://add-player', function ( msg ) {
     const payload = JSON.parse( msg );
+
+    if ( payload.data && payload.room ) {
+      player = payload.data
+      roomId = payload.room.id
+    }
+
     const response = JSON.stringify( {
       room: rooms[ payload.room.id ],
       chats: chatLogs[ payload.room.id ]
     } )
     socket.broadcast.emit( 'event://get-player', response );
   } )
+  socket.on( 'disconnect', function () {
+    const { username, avatar } = player
+
+    let newPlayerList = [ ...rooms[ roomId ].players ]
+    newPlayerList = newPlayerList.filter( item => item.username !== username )
+    rooms[ roomId ].players = newPlayerList
+
+    const playerExitMsg = { username, avatar, message: 'has left the chat' }
+    chatLogs[ roomId ] = [ ...chatLogs[ roomId ], playerExitMsg ]
+
+    const response = JSON.stringify( {
+      room: rooms[ roomId ],
+      chats: chatLogs[ roomId ]
+    } )
+    socket.broadcast.emit( 'event://get-player', response );
+  } );
 } );
 
 io.on( 'connection', function ( socket ) {
