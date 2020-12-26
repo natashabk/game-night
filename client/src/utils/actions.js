@@ -6,31 +6,36 @@ import { API_BASE } from './config';
 export const CREATE_ROOM_REQUEST = "CREATE_ROOM_REQUEST"
 export const CREATE_ROOM_SUCCESS = "CREATE_ROOM_SUCCESS"
 export const CREATE_ROOM_ERROR = "CREATE_ROOM_ERROR"
+
 export const JOIN_ROOM_REQUEST = "JOIN_ROOM_REQUEST"
 export const JOIN_ROOM_SUCCESS = "JOIN_ROOM_SUCCESS"
 export const JOIN_ROOM_ERROR = "JOIN_ROOM_ERROR"
+
+export const CHECK_ROOM_REQUEST = "CHECK_ROOM_REQUEST"
+export const CHECK_ROOM_SUCCESS = "CHECK_ROOM_SUCCESS"
+export const CHECK_ROOM_ERROR = "CHECK_ROOM_ERROR"
+
 export const SET_USERNAME = "SET_USERNAME"
 export const SET_AVATAR = "SET_AVATAR"
+
 export const UPDATE_CHAT_LOG = "UPDATE_CHAT_LOG"
 export const UPDATE_PLAYERS = "UPDATE_PLAYERS"
 export const UPDATE_SCORE = "UPDATE_SCORE"
 
+export const RESET_ROOM = "RESET_ROOM"
 
 // Now we define actions
 const createRoomRequest = () => ( { type: CREATE_ROOM_REQUEST } )
 const createRoomSuccess = ( payload ) => ( { type: CREATE_ROOM_SUCCESS, payload } )
 const createRoomError = ( error ) => ( { type: CREATE_ROOM_ERROR, error } )
 
-export function createRoom( roomName, username, avatar ) {
+export function createRoom( roomName ) {
 
   return async function ( dispatch ) {
     dispatch( createRoomRequest() );
     try {
-      const resp = await axios.get( `${ API_BASE }/newRoom/${ roomName }/${ username }/${ avatar }` )
+      const resp = await axios.get( `${ API_BASE }/newRoom/${ roomName }` )
       dispatch( createRoomSuccess( resp.data ) );
-      resp.data.chats.forEach( msg =>
-        dispatch( updateChatLog( { room: resp.data.room, data: msg } ) )
-      )
     } catch ( error ) {
       dispatch( createRoomError( error ) );
     }
@@ -47,11 +52,26 @@ export function joinRoom( roomId, username, avatar ) {
     try {
       const resp = await axios.get( `${ API_BASE }/room/${ roomId }/${ username }/${ avatar }` )
       dispatch( joinRoomSuccess( resp.data ) );
-      resp.data.chats.forEach( msg =>
-        dispatch( updateChatLog( { room: resp.data.room, data: msg } ) )
-      )
     } catch ( error ) {
       dispatch( joinRoomError( error ) );
+    }
+  }
+}
+
+const checkRoomRequest = () => ( { type: CHECK_ROOM_REQUEST } )
+const checkRoomSuccess = ( payload ) => ( { type: CHECK_ROOM_SUCCESS, payload } )
+const checkRoomError = ( error ) => ( { type: CHECK_ROOM_ERROR, error } )
+
+export function checkRoom( roomId ) {
+  return async function ( dispatch ) {
+    dispatch( checkRoomRequest() );
+    try {
+      const resp = await axios.get( `${ API_BASE }/checkRoom/${ roomId }` )
+      if ( resp.data.error ) {
+        dispatch( checkRoomError( resp.data.error ) )
+      } else dispatch( checkRoomSuccess( resp.data ) )
+    } catch ( error ) {
+      dispatch( checkRoomError( { error } ) );
     }
   }
 }
@@ -61,3 +81,5 @@ export const setAvatar = ( avatar ) => ( { type: SET_AVATAR, avatar } )
 export const updateChatLog = ( update ) => ( { type: UPDATE_CHAT_LOG, update } )
 export const updatePlayers = ( update ) => ( { type: UPDATE_PLAYERS, update } )
 export const updateScore = ( update ) => ( { type: UPDATE_SCORE, update } )
+
+export const resetRoom = ( update ) => ( { type: RESET_ROOM } )

@@ -4,7 +4,9 @@ import { icons } from '../icons/svg';
 const { Text } = Typography
 
 const Message = ( { msg, idx } ) => {
-  if ( msg.message === 'has entered the chat' ) {
+  const isUpdate = ( text ) => text === 'has entered the chat' || text === 'has left the chat'
+
+  if ( isUpdate( msg.message ) ) {
     return (
       <Row type='flex' justify='center' style={{ paddingBottom: 5 }}>
         <Text type='secondary'>{msg.username}  {msg.message}!</Text>

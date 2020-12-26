@@ -1,41 +1,30 @@
 import React, { useContext } from 'react';
 import { Provider, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route, Redirect, useParams } from 'react-router-dom';
-import { Layout, Typography, } from 'antd';
-import SignIn from './SignIn'
-import SocialSider from './SocialSider'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Layout } from 'antd';
 import './App.css';
 import { WebSocketProvider, store, WebSocketContext } from './utils';
+import TopHeader from './TopHeader'
+import SignIn from './SignIn'
+import SocialSider from './SocialSider'
 import Scattergories from './Scattergories/Scattergories';
-const { Header, Sider, Content } = Layout;
-const { Title } = Typography;
+const { Sider, Content } = Layout;
 
 const noBg = { background: 'none' }
-const titleStyle = { color: 'white', textAlign: 'center', maxWidth: 1300 }
-
-export const gnHead = (
-  <Header style={noBg}>
-    <Title level={1} style={titleStyle}>GAME NIGHT</Title>
-  </Header>
-)
-
 const App = () => {
   const room = useSelector( state => state.room );
   const username = useSelector( state => state.username );
   const avatar = useSelector( state => state.avatar );
+  const err = useSelector( state => state.error );
   const ws = useContext( WebSocketContext );
 
-  let { roomId } = useParams();
-
-  if ( !room || !username || !avatar ) {
-    return <Redirect to={{ pathname: "/", state: { roomId: roomId } }} />
-  }
-  else { ws.addPlayer( room, username, avatar ) }
+  if ( !room || !username || !avatar ) return <SignIn />
+  else ws.addPlayer( room, username, avatar )
 
   return (
     <>
       <Layout style={noBg}>
-        {gnHead}
+        <TopHeader err={err} />
         <Content style={{ ...noBg, padding: 30 }}>
           <Scattergories />
         </Content>

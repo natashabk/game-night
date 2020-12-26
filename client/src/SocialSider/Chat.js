@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { useSelector, } from 'react-redux'
 import { Row, Input, Button, Col } from 'antd'
 import { WebSocketContext } from '../utils';
@@ -11,11 +11,6 @@ const Chat = () => {
   const username = useSelector( state => state.username );
   const avatar = useSelector( state => state.avatar );
   const chats = useSelector( state => state.chatLog );
-  const players = useSelector( state => state.room.players );
-
-  useEffect( () => {
-    console.log( players )
-  }, [ players ] )
 
   const ws = useContext( WebSocketContext );
 

@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 import { Input, Button, Divider, Row, Radio, Typography } from 'antd';
 import { icons } from '../icons/svg';
+import { setUsername, setAvatar, resetRoom, joinRoom } from '../utils';
 import { lightWhite, inputStyle, btnStyle } from './index'
 const { Text } = Typography
 const iconStyle = { height: 40, width: 40, borderRadius: 6, padding: 0, margin: 0 }
 const changeIdBtn = { fontSize: 12, fontWeight: 600 }
-const CreateUsername = ( { setUsernameInput, setIconInput, iconInput, enterRoom, setRoomId, roomId, setMode } ) => {
-  const changeRoom = () => {
-    setRoomId()
-    setMode( 'room' )
-  }
+const randomIcon = () => Object.keys( icons )[ Math.floor( Math.random() * 12 ) ]
+
+const CreateUsername = () => {
+  const [ usernameInput, setUsernameInput ] = useState()
+  const [ iconInput, setIconInput ] = useState( randomIcon() )
+
+  const dispatch = useDispatch();
+  const room = useSelector( state => state.room );
+
+  const enterRoom = () => {
+    dispatch( setUsername( usernameInput ) )
+    dispatch( setAvatar( iconInput ) )
+    dispatch( joinRoom( room.id, usernameInput, iconInput ) )
+  };
 
   const iconButton = ( item ) => (
     <button
@@ -35,10 +46,10 @@ const CreateUsername = ( { setUsernameInput, setIconInput, iconInput, enterRoom,
       </Row>
       <Divider style={{ background: lightWhite }} />
       <Row>
-        {roomId &&
+        {room && room.id &&
           <Text style={{ paddingBottom: 10 }}>
-            You're about to join room <span style={{ fontWeight: 600 }}>{roomId}</span>.
-              <Button type='link' style={changeIdBtn} onClick={() => changeRoom()}>
+            You're about to join room <span style={{ fontWeight: 600 }}>{room.id}</span>.
+              <Button type='link' style={changeIdBtn} onClick={() => dispatch( resetRoom() )}>
               Change room
               </Button>
           </Text>

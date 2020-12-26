@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Input, Button, Divider, Row } from 'antd';
+import { useDispatch } from 'react-redux'
+import { createRoom, checkRoom } from '../utils';
 import { lightWhite, inputStyle, btnStyle } from './index'
 
-const CreateOrJoinRoom = ( { setRoomName, setRoomId, setMode } ) => {
+const CreateOrJoinRoom = () => {
+  const [ roomName, setRoomName ] = useState();
+  const [ roomId, setRoomId ] = useState();
+  const dispatch = useDispatch();
+
+  const createNewRoom = () => {
+    dispatch( createRoom( roomName ) )
+  }
+
+  const checkRoomId = () => {
+    dispatch( checkRoom( roomId ) )
+  }
+
   return (
     <>
       <Row>
@@ -11,10 +25,10 @@ const CreateOrJoinRoom = ( { setRoomName, setRoomId, setMode } ) => {
           maxLength={20}
           placeholder="Enter a short name for your group"
           onChange={( e ) => setRoomName( e.target.value )}
-          onPressEnter={() => setMode( 'user' )}
+          onPressEnter={() => createNewRoom()}
           style={inputStyle}
         />
-        <Button type='primary' onClick={() => setMode( 'user' )} style={btnStyle}>
+        <Button type='primary' onClick={() => createNewRoom()} style={btnStyle}>
           Create new room
         </Button>
       </Row>
@@ -24,10 +38,10 @@ const CreateOrJoinRoom = ( { setRoomName, setRoomId, setMode } ) => {
           size="large"
           placeholder="Enter room ID"
           onChange={( e ) => setRoomId( e.target.value )}
-          onPressEnter={() => setMode( 'user' )}
+          onPressEnter={() => checkRoomId()}
           style={inputStyle}
         />
-        <Button type='primary' onClick={() => setMode( 'user' )} style={btnStyle}>
+        <Button type='primary' onClick={() => checkRoomId()} style={btnStyle}>
           Join room
         </Button>
       </Row>

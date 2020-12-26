@@ -11,19 +11,29 @@ let chatLogs = {};
 app.use( cors() );
 
 //creating a room
-app.get( '/newRoom/:roomName/:username/:avatar', function ( req, res, next ) {
-  const player = { username: req.params.username, avatar: req.params.avatar, score: 0 }
-  const newPlayerMsg = { ...player, message: 'has entered the chat' }
+app.get( '/newRoom/:roomName', function ( req, res, next ) {
+  // const player = { username: req.params.username, avatar: req.params.avatar, score: 0 }
+  // const newPlayerMsg = { ...player, message: 'has entered the chat' }
 
   // id is what other players will be typing in to enter the room so it needs to be easy
   // 0 - O and I - l are difficult to distinguish in the app font
   const id = shortid.generate().slice( 0, 7 ).replace( /0|O|I|l/gi, 'A' )
 
-  const room = { name: req.params.roomName, id, players: [ player ] }
+  const room = { name: req.params.roomName, id, players: [] }
   rooms[ id ] = room;
-  chatLogs[ id ] = [ newPlayerMsg ];
+  chatLogs[ id ] = [];
 
-  res.json( { room, chats: [ newPlayerMsg ] } );
+  res.json( { room, chats: [] } );
+} );
+
+//check to see if room exists before uploading player data
+app.get( '/checkRoom/:roomId', function ( req, res, next ) {
+  const roomId = req.params.roomId;
+  if ( rooms[ roomId ] ) {
+    res.json( { room: rooms[ roomId ], chats: chatLogs[ roomId ] } );
+  } else {
+    res.json( { error: 'The room you requested does not exist.' } )
+  }
 } );
 
 //joining a room

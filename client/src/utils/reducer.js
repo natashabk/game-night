@@ -1,13 +1,14 @@
-// reducers.js
-
 import {
   CREATE_ROOM_SUCCESS,
   JOIN_ROOM_SUCCESS,
+  CHECK_ROOM_SUCCESS,
+  CHECK_ROOM_ERROR,
   SET_USERNAME,
   SET_AVATAR,
   UPDATE_CHAT_LOG,
   UPDATE_PLAYERS,
-  UPDATE_SCORE
+  UPDATE_SCORE,
+  RESET_ROOM
 } from './actions';
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
   chatLog: [],
   username: null,
   avatar: null,
+  error: null
 }
 
 // for dev
@@ -73,12 +75,24 @@ export default function chatReducer( state, action ) {
   switch ( action.type ) {
     case CREATE_ROOM_SUCCESS:
       state.room = action.payload.room;
-      state.chats = action.payload.chats;
+      state.chatLog = action.payload.chats;
       break;
 
     case JOIN_ROOM_SUCCESS:
       state.room = action.payload.room;
-      state.chats = action.payload.chats;
+      state.chatLog = action.payload.chats;
+      break;
+
+    case CHECK_ROOM_SUCCESS:
+      state.room = action.payload.room;
+      break;
+
+    case CHECK_ROOM_ERROR:
+      state.error = action;
+      break;
+
+    case RESET_ROOM:
+      state.room = null;
       break;
 
     case SET_USERNAME:
@@ -103,17 +117,12 @@ export default function chatReducer( state, action ) {
 
     case UPDATE_SCORE:
       if ( state.room !== null && action.update.roomId === state.room.id ) {
-
         const updatedPlayer = {
           ...state.room.players[ action.update.playerIdx ],
           score: action.update.score
         }
-
-        console.log( updatedPlayer )
         let newPlayers = [ ...state.room.players ]
-        console.log( newPlayers )
         newPlayers[ action.update.playerIdx ] = updatedPlayer
-        console.log( newPlayers )
         state.room.players = newPlayers
       }
       break;

@@ -1,72 +1,52 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Card, Row } from 'antd';
-import { setUsername, setAvatar, createRoom, joinRoom } from '../utils';
-import { gnHead } from '../App';
+import TopHeader from '../TopHeader';
+import { checkRoom } from '../utils';
 import CreateOrJoinRoom from './CreateOrJoinRoom'
 import CreateUserName from './CreateUsername'
-import { icons } from '../icons/svg';
 
 export const lightWhite = '#ffffff4d'
 export const inputStyle = { maxWidth: 355, minWidth: 200 }
 export const btnStyle = { height: 40, width: 145 }
 
-const randomIcon = () => Object.keys( icons )[ Math.floor( Math.random() * 12 ) ]
-
 const SignIn = () => {
   const [ mode, setMode ] = useState( 'room' )
-  const [ usernameInput, setUsernameInput ] = useState()
-  const [ iconInput, setIconInput ] = useState( randomIcon() )
-  const [ roomName, setRoomName ] = useState();
-  const [ roomId, setRoomId ] = useState();
 
-  const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
+  let { roomId } = useParams();
 
+  const room = useSelector( state => state.room );
   const username = useSelector( state => state.username );
   const avatar = useSelector( state => state.avatar );
-  const room = useSelector( state => state.room );
+  const err = useSelector( state => state.error );
+  const dispatch = useDispatch();
 
   useEffect( () => {
-    if ( location.state && location.state.roomId ) {
-      setRoomId( location.state.roomId )
-      setMode( 'user' )
-    }
-  }, [ location ] )
+    //check for room validity if attempted to enter straight from url
+    //if server says room is valid, app state.room will be updated
+    if ( roomId && !room && !err ) dispatch( checkRoom( roomId ) )
+  }, [ roomId, err, room, dispatch ] )
 
-  useEffect( () => {
-    if ( room && room.id ) history.push( `/${ room.id }` ) //tells router to load the app component
-  }, [ room, history ] )
+  useEffect( () => { //room name + id is the first thing to be collected and checked by server
+    if ( !room && mode !== 'roomData' ) setMode( 'roomData' )
+  }, [ room, mode ] )
 
-  useEffect( () => {
-    if ( roomName && username && avatar ) dispatch( createRoom( roomName, username, avatar ) )
-    else if ( roomId && username && avatar ) dispatch( joinRoom( roomId, username, avatar ) )
-  }, [ roomName, roomId, username, avatar, dispatch ] )
+  useEffect( () => { //moves from room info collection screen to user info collection screen
+    if ( ( room && !username ) || ( room && !avatar ) ) setMode( 'userData' )
+  }, [ room, username, avatar ] )
 
-  const enterRoom = () => {
-    dispatch( setUsername( usernameInput ) )
-    dispatch( setAvatar( iconInput ) )
-  };
+  useEffect( () => { //loads app when all user + room info is collected in server + stored in state
+    if ( room && username && avatar ) history.push( `/${ room.id }` )
+  } )
 
   return (
     <>
-      {gnHead}
+      <TopHeader err={err} />
       <Row justify={'center'}>
         <Card style={{ width: 550, background: lightWhite }}>
-          {mode === 'room' ?
-            <CreateOrJoinRoom setRoomName={setRoomName} setRoomId={setRoomId} setMode={setMode} /> :
-            <CreateUserName
-              setUsernameInput={setUsernameInput}
-              setIconInput={setIconInput}
-              iconInput={iconInput}
-              enterRoom={enterRoom}
-              setRoomId={setRoomId}
-              roomId={roomId}
-              setMode={setMode}
-            />
-          }
+          {mode === 'roomData' ? <CreateOrJoinRoom /> : <CreateUserName />}
         </Card>
       </Row>
     </>
