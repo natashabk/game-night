@@ -22,6 +22,7 @@ const createRoomSuccess = ( payload ) => ( { type: CREATE_ROOM_SUCCESS, payload 
 const createRoomError = ( error ) => ( { type: CREATE_ROOM_ERROR, error } )
 
 export function createRoom( roomName, username, avatar ) {
+
   return async function ( dispatch ) {
     dispatch( createRoomRequest() );
     try {

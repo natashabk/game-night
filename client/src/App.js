@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { Provider, useSelector } from 'react-redux';
+import { BrowserRouter as Router, Switch, Route, Redirect, useParams } from 'react-router-dom';
 import { Layout, Typography, } from 'antd';
-import SignIn from './Login'
+import SignIn from './SignIn'
 import SocialSider from './SocialSider'
 import './App.css';
 import { WebSocketProvider, store, WebSocketContext } from './utils';
@@ -10,8 +11,8 @@ const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
 
 const noBg = { background: 'none' }
-
 const titleStyle = { color: 'white', textAlign: 'center', maxWidth: 1300 }
+
 export const gnHead = (
   <Header style={noBg}>
     <Title level={1} style={titleStyle}>GAME NIGHT</Title>
@@ -24,8 +25,11 @@ const App = () => {
   const avatar = useSelector( state => state.avatar );
   const ws = useContext( WebSocketContext );
 
+  let { roomId } = useParams();
 
-  if ( !room || !username || !avatar ) return <SignIn />
+  if ( !room || !username || !avatar ) {
+    return <Redirect to={{ pathname: "/", state: { roomId: roomId } }} />
+  }
   else { ws.addPlayer( room, username, avatar ) }
 
   return (
@@ -45,13 +49,22 @@ const App = () => {
 
 const AppWrapper = () => {
   return (
-    <Provider store={store}>
-      <WebSocketProvider>
-        <Layout style={{ ...noBg, padding: 30 }}>
-          <App />
-        </Layout>
-      </WebSocketProvider>
-    </Provider>
+    <Router>
+      <Provider store={store}>
+        <WebSocketProvider>
+          <Layout style={{ ...noBg, padding: 30 }}>
+            <Switch>
+              <Route path={`/:roomId`}>
+                <App />
+              </Route>
+              <Route path='/'>
+                <SignIn />
+              </Route>
+            </Switch>
+          </Layout>
+        </WebSocketProvider>
+      </Provider>
+    </Router>
   )
 }
 export default AppWrapper
