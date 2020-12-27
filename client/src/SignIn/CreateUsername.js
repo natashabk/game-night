@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom';
 import { Input, Button, Divider, Row, Radio, Typography } from 'antd';
 import { icons } from '../icons/svg';
 import { setUsername, setAvatar, resetRoom, joinRoom } from '../utils';
@@ -14,7 +15,13 @@ const CreateUsername = () => {
   const [ iconInput, setIconInput ] = useState( randomIcon() )
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const room = useSelector( state => state.room );
+
+  const changeRoom = () => {
+    history.push( '/' )
+    dispatch( resetRoom() )
+  }
 
   const enterRoom = () => {
     dispatch( setUsername( usernameInput ) )
@@ -49,7 +56,7 @@ const CreateUsername = () => {
         {room && room.id &&
           <Text style={{ paddingBottom: 10 }}>
             You're about to join room <span style={{ fontWeight: 600 }}>{room.id}</span>.
-              <Button type='link' style={changeIdBtn} onClick={() => dispatch( resetRoom() )}>
+              <Button type='link' style={changeIdBtn} onClick={() => changeRoom()}>
               Change room
               </Button>
           </Text>

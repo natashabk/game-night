@@ -76,15 +76,18 @@ export default function chatReducer( state, action ) {
     case CREATE_ROOM_SUCCESS:
       state.room = action.payload.room;
       state.chatLog = action.payload.chats;
+      state.error = null;
       break;
 
     case JOIN_ROOM_SUCCESS:
       state.room = action.payload.room;
       state.chatLog = action.payload.chats;
+      state.error = null;
       break;
 
     case CHECK_ROOM_SUCCESS:
       state.room = action.payload.room;
+      state.error = null;
       break;
 
     case CHECK_ROOM_ERROR:

@@ -43,7 +43,7 @@ const SignIn = () => {
 
   return (
     <>
-      <TopHeader err={err} />
+      <TopHeader />
       <Row justify={'center'}>
         <Card style={{ width: 550, background: lightWhite }}>
           {mode === 'roomData' ? <CreateOrJoinRoom /> : <CreateUserName />}

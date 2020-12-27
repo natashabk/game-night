@@ -1,8 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
 
+/* app colors:
+purple: #7b2cbf (background, cta buttons)
+pink: #FF006E   (background, warnings, errors)
+
+orange: #FB5607 (not sure yet)
+yellow: #FFBE0B (not sure yet)
+*/
+
 #root{
   min-height: 100vh;
-  background-image: linear-gradient(to bottom right, #ff5454, #4ac9ef);
+  background-image: linear-gradient(to bottom right, #7b2cbf, #FF006E);
   font-family: 'Quicksand', sans-serif;
 }
 
@@ -16,6 +24,28 @@
   scroll-snap-align: end;
 }
 
+.bgCircle {
+  height: 100%; 
+  width: 100%; 
+  position: absolute; 
+  z-index: 0; 
+  top: 0; 
+  display: flex; 
+  justify-content: center; 
+  min-height: 600; 
+  min-width: 600
+}
+
 .ant-collapse-content-box {
   padding: 0px 0px 8px 8px !important;
+}
+
+
+/* temporary fix - change these once you add a real theme */
+.ant-btn-primary {
+  background-color: #7b2cbf !important;
+  border-color: #7b2cbf !important;
+}
+.ant-btn-link {
+  color: #7b2cbf !important;
 }
