@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom';
 import { Card, Row } from 'antd';
-import TopHeader from '../TopHeader';
+import Brand from '../Brand';
 import { checkRoom } from '../utils';
 import CreateOrJoinRoom from './CreateOrJoinRoom'
 import CreateUserName from './CreateUsername'
@@ -43,7 +43,7 @@ const SignIn = () => {
 
   return (
     <>
-      <TopHeader />
+      <Brand />
       <Row justify={'center'}>
         <Card style={{ width: 550, background: lightWhite }}>
           {mode === 'roomData' ? <CreateOrJoinRoom /> : <CreateUserName />}

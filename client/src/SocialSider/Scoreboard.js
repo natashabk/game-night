@@ -26,18 +26,16 @@ const Scoreboard = () => {
         const { username, avatar, score } = player
         return (
           <Row key={`ps${ idx }`} style={rowStyle( idx === players.length - 1 )}>
-            <Col span={12} >
+            <Col span={13} style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} >
               <div style={{ height: 20, width: 20, display: 'inline-flex', marginRight: 3 }}>
                 {avatar && icons[ avatar ]}
               </div>
               <Text style={{ fontSize: 20 }}>{username}</Text>
             </Col>
-            <Col span={7}>
-              <Row>
-                <Text style={{ fontSize: 25, marginRight: 5 }}>{score}</Text>
-              </Row>
+            <Col span={4} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Text style={{ fontSize: 25, marginRight: 5, color: '#7b2cbf' }}>{score}</Text>
             </Col>
-            <Col span={5} style={{ display: 'flex', alignItems: 'center' }}>
+            <Col span={5} style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
               <Row type='flex' style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Button
                   style={scoreBtn}

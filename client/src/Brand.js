@@ -16,7 +16,7 @@ const titleStyle = {
 }
 const subtitleStyle = { color: 'white', padding: 5, borderRadius: 3 }
 
-const TopHeader = () => {
+const Brand = () => {
   const err = useSelector( state => state.error );
   const room = useSelector( state => state.room );
   const username = useSelector( state => state.username );
@@ -41,4 +41,4 @@ const TopHeader = () => {
     </Header>
   )
 }
-export default TopHeader;
+export default Brand;

@@ -1,6 +1,6 @@
 // actions.js
 import axios from 'axios';
-import { API_BASE } from './config';
+const API = process.env.REACT_APP_API_BASE
 
 // These are our action types
 export const CREATE_ROOM_REQUEST = "CREATE_ROOM_REQUEST"
@@ -34,7 +34,7 @@ export function createRoom( roomName ) {
   return async function ( dispatch ) {
     dispatch( createRoomRequest() );
     try {
-      const resp = await axios.get( `${ API_BASE }/newRoom/${ roomName }` )
+      const resp = await axios.get( `${ API }/newRoom/${ roomName }` )
       dispatch( createRoomSuccess( resp.data ) );
     } catch ( error ) {
       dispatch( createRoomError( error ) );
@@ -50,7 +50,7 @@ export function joinRoom( roomId, username, avatar ) {
   return async function ( dispatch ) {
     dispatch( joinRoomRequest() );
     try {
-      const resp = await axios.get( `${ API_BASE }/room/${ roomId }/${ username }/${ avatar }` )
+      const resp = await axios.get( `${ API }/room/${ roomId }/${ username }/${ avatar }` )
       dispatch( joinRoomSuccess( resp.data ) );
     } catch ( error ) {
       dispatch( joinRoomError( error ) );
@@ -66,7 +66,7 @@ export function checkRoom( roomId ) {
   return async function ( dispatch ) {
     dispatch( checkRoomRequest() );
     try {
-      const resp = await axios.get( `${ API_BASE }/checkRoom/${ roomId }` )
+      const resp = await axios.get( `${ API }/checkRoom/${ roomId }` )
       if ( resp.data.error ) {
         dispatch( checkRoomError( resp.data.error ) )
       } else dispatch( checkRoomSuccess( resp.data ) )

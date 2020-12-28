@@ -19,57 +19,43 @@ const initialState = {
   error: null
 }
 
-// for dev
-// const initialState = {
-//   room: {
-//     id: 'pj_vm',
-//     players: [
-//       {
-//         username: 'deg',
-//         avatar: 'dog',
-//         score: 5
-//       },
-//       {
-//         username: 'tov',
-//         avatar: 'tv',
-//         score: 18
-//       },
-//       {
-//         username: 'space',
-//         avatar: 'alien',
-//         score: 7
-//       },
-//     ]
-//   },
-//   chatLog: [
-//     { username: 'sk8', message: 'has entered the chat' },
-//     {
-//       username: 'sk8',
-//       avatar: 'skateboard',
-//       message: '3. When you are ready to start, click on one of the rounds in the left menu. Make sure everyone on the call is starting at the same time!'
-//     },
-//     { username: 'space', message: 'has entered the chat' },
-//     { username: 'space', avatar: 'alien', message: 'cool m8' },
-//     { username: 'moth', message: 'has entered the chat' },
-//     { username: 'moth', avatar: 'moth', message: 'nice' },
-//     { username: 'deg', message: 'has entered the chat' },
-//     { username: 'deg', avatar: 'dog', message: 'bark bark' },
-//     { username: 'deg', avatar: 'dog', message: 'wooof' },
-//     {
-//       username: 'deg',
-//       avatar: 'dog',
-//       message: 'woofwoofwoofwoofwoofwoofwoofwoofwoofwoofwoofwoofwoofwoofwoofwoofwoofwoofwoofwoofwoofwoofwoofwoof'
-//     },
-//     { username: 'tov', message: 'has entered the chat' },
-//     { username: 'tov', avatar: 'tv', message: 'oi oi lads' }, ],
-//   username: 'testmoth',
-//   avatar: 'moth',
-
-// }
+//for dev
+const devState = {
+  room: {
+    id: '4_2AhXc',
+    name: 'Kaczmarczyk Party',
+    players: [
+      {
+        username: 'deg',
+        avatar: 'dog',
+        score: 5
+      },
+      {
+        username: 'STATIC NOISE',
+        avatar: 'tv',
+        score: 18
+      },
+      {
+        username: 'muthie',
+        avatar: 'moth',
+        score: 0
+      },
+      {
+        username: 'xenon',
+        avatar: 'alien',
+        score: 10
+      },
+    ]
+  },
+  chatLog: [],
+  username: 'muthie',
+  avatar: 'moth',
+  error: null
+}
 
 export default function chatReducer( state, action ) {
   if ( typeof state === 'undefined' ) {
-    return initialState
+    return devState
   }
 
   switch ( action.type ) {

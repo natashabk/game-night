@@ -1,9 +1,9 @@
 import React, { createContext } from 'react'
 import io from 'socket.io-client';
-import { WS_BASE } from './config';
+
 import { useDispatch } from 'react-redux';
 import { updateChatLog, updatePlayers, updateScore } from './actions';
-
+const WS_BASE = process.env.REACT_APP_WS_BASE
 const WebSocketContext = createContext( null )
 
 export { WebSocketContext }

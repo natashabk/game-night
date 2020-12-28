@@ -5,10 +5,10 @@ import { Layout } from 'antd';
 import { ReactComponent as Circle } from './icons/svg/circle.svg';
 import './App.css';
 import { WebSocketProvider, store, WebSocketContext } from './utils';
-import TopHeader from './TopHeader'
+import Brand from './Brand'
 import SignIn from './SignIn'
 import SocialSider from './SocialSider'
-import Scattergories from './Scattergories/Scattergories';
+import GameMenu from './GameMenu'
 const { Sider, Content } = Layout;
 
 const noBg = { background: 'none' }
@@ -26,9 +26,9 @@ const App = () => {
   return (
     <>
       <Layout style={{ ...noBg, zIndex: 1 }}>
-        <TopHeader />
+        <Brand />
         <Content style={{ ...noBg, padding: 30 }}>
-          <Scattergories />
+          <GameMenu />
         </Content>
       </Layout>
       <Sider theme="light" width={300} style={{ height: 'fit-content' }}>

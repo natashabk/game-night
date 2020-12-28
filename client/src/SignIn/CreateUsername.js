@@ -63,6 +63,7 @@ const CreateUsername = () => {
         }
         <Input
           size="large"
+          maxLength={12}
           placeholder="Enter username"
           onChange={( e ) => setUsernameInput( e.target.value )}
           onPressEnter={enterRoom}
