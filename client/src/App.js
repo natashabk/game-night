@@ -43,7 +43,7 @@ const App = () => {
     <>
       <Layout style={{ ...noBg, zIndex: 1 }}>
         {!gameMode && <Brand />}
-        <Content style={{ ...noBg, padding: 30 }}>
+        <Content style={{ ...noBg, padding: gameMode ? 0 : 30 }}>
           <Play />
         </Content>
       </Layout>

@@ -88,8 +88,8 @@ export interface ValidateOptions {
      */
     recursive?: boolean;
 }
-export declare type InternalValidateFields = (nameList?: NamePath[], options?: ValidateOptions) => Promise<Store>;
-export declare type ValidateFields = (nameList?: NamePath[]) => Promise<Store>;
+export declare type InternalValidateFields<Values = any> = (nameList?: NamePath[], options?: ValidateOptions) => Promise<Values>;
+export declare type ValidateFields<Values = any> = (nameList?: NamePath[]) => Promise<Values>;
 interface ValueUpdateInfo {
     type: 'valueUpdate';
     source: 'internal' | 'external';
@@ -152,7 +152,7 @@ export interface FormInstance<Values = any> {
     resetFields: (fields?: NamePath[]) => void;
     setFields: (fields: FieldData[]) => void;
     setFieldsValue: (value: RecursivePartial<Values>) => void;
-    validateFields: ValidateFields;
+    validateFields: ValidateFields<Values>;
     submit: () => void;
 }
 export declare type InternalFormInstance = Omit<FormInstance, 'validateFields'> & {

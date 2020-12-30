@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Timer from 'simple-circle-timer'
 import { Row, Col, Input, Typography, Divider, Card, Checkbox } from 'antd';
@@ -28,8 +28,11 @@ const Board = ( { locked, updateRound, setLocked } ) => {
     }
   }
 
+  useEffect( () => {
+    setTotal( filledOut.length )
+  }, [ filledOut ] )
+
   //<Button onClick={() => updateRound( game.round + 1 )}>Next Round</Button>
-  console.log( filledOut )
   return (
     <>
       <Card style={{ background: '#ffffff4d', marginBottom: 20, width: 200, position: 'fixed' }} bodyStyle={{ padding: 16 }}>
@@ -48,7 +51,7 @@ const Board = ( { locked, updateRound, setLocked } ) => {
             fontSize={20}
             minutes={0.22}
             fillColor={'#FF006E'}
-          // onComplete={() => setLocked( true )}
+            onComplete={() => setLocked( true )}
           />
         </Row>
       </Card>
@@ -69,7 +72,7 @@ const Board = ( { locked, updateRound, setLocked } ) => {
           <Divider style={{ borderTop: '1px solid #ffffff8c', margin: '8px 0px' }} />
         </Row>
       ) )}
-      {locked ? <Title level={1} style={{ color: 'white', textAlign: 'center', maxWidth: 1300 }}>ROUND TOTAL: {total}</Title> : null}
+      {locked ? <Title level={2} style={{ color: 'white', textAlign: 'center' }}>ROUND TOTAL: {total}</Title> : null}
     </>
   )
 }
