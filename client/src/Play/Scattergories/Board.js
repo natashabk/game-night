@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Table, Input, Typography, Checkbox } from 'antd';
+import { useSelector } from 'react-redux';
+import { Row, Col, Input, Typography, Checkbox, Button } from 'antd';
 import { categories } from './const'
 const { Text, Title } = Typography
 
 const header = { fontWeight: 600, fontSize: 20, color: '#b67d94', }
 
-const Board = ( { round, locked } ) => {
+const Board = ( { locked, updateRound } ) => {
   const [ total, setTotal ] = useState( 15 )
+  const round = useSelector( state => state.game.round );
 
   const handlePointChange = ( e ) => {
     const point = e.target.checked
@@ -38,14 +40,15 @@ const Board = ( { round, locked } ) => {
 
   return (
     <>
-      <Table
-        columns={columns}
-        dataSource={data}
-        pagination={false}
-        bordered={true}
-        style={{ maxWidth: 'fit-content' }}
-      />
+      {categories[ round - 1 ].map( word => (
+        <Row>
+          <Col span={18} style={{ textAlign: 'right' }}>{word}</Col>
+          <Col span={6}><Input allowClear disabled={locked} /></Col>
+          {locked && <Col>Point?</Col>}
+        </Row>
+      ) )}
       {locked ? <Title level={1} style={{ color: 'white', textAlign: 'center', maxWidth: 1300 }}>ROUND TOTAL: {total}</Title> : null}
+      <Button style={{ margin: '50px auto' }} onClick={() => updateRound( round + 1 )}>Next Round</Button>
     </>
   )
 }

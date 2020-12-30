@@ -21,6 +21,7 @@ export const SET_AVATAR = "SET_AVATAR"
 export const UPDATE_CHAT_LOG = "UPDATE_CHAT_LOG"
 export const UPDATE_PLAYERS = "UPDATE_PLAYERS"
 export const UPDATE_SCORE = "UPDATE_SCORE"
+export const UPDATE_GAME = "UPDATE_GAME"
 
 export const RESET_ROOM = "RESET_ROOM"
 
@@ -81,5 +82,6 @@ export const setAvatar = ( avatar ) => ( { type: SET_AVATAR, avatar } )
 export const updateChatLog = ( update ) => ( { type: UPDATE_CHAT_LOG, update } )
 export const updatePlayers = ( update ) => ( { type: UPDATE_PLAYERS, update } )
 export const updateScore = ( update ) => ( { type: UPDATE_SCORE, update } )
+export const updateGame = ( update ) => ( { type: UPDATE_GAME, update } )
 
 export const resetRoom = ( update ) => ( { type: RESET_ROOM } )

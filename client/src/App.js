@@ -8,7 +8,7 @@ import { WebSocketProvider, store, WebSocketContext } from './utils';
 import Brand from './Brand'
 import SignIn from './SignIn'
 import SocialSider from './SocialSider'
-import GameMenu from './GameMenu'
+import Play from './Play'
 const { Sider, Content } = Layout;
 
 const noBg = { background: 'none' }
@@ -35,7 +35,7 @@ const App = () => {
       <Layout style={{ ...noBg, zIndex: 1 }}>
         <Brand />
         <Content style={{ ...noBg, padding: 30 }}>
-          <GameMenu />
+          <Play />
         </Content>
       </Layout>
       <Sider theme="light" width={300} style={{ background: '#ffffff66', maxHeight: windowHeight - 60 }}>

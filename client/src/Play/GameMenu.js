@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Typography, Col, Row, Card, Button } from 'antd';
 import { QuestionOutlined } from '@ant-design/icons';
-import Scattergories from './Scattergories/Scattergories';
 import Help from './Help';
 const { Text, Title } = Typography;
 const bold = { fontWeight: 600 }
@@ -15,11 +14,7 @@ const gameSummaries = [
     team: 'Individual or teams (if team members are in the same location)'
   }
 ]
-
-const start = ( game ) => {
-  console.log( game.name )
-}
-const GameMenu = () => {
+const GameMenu = ( { updateGame } ) => {
   const [ helpOpen, setHelpOpen ] = useState( false )
   return (
     <Col>
@@ -30,7 +25,13 @@ const GameMenu = () => {
       <Row>
         {helpOpen && <Help setHelpOpen={setHelpOpen} />}
         {gameSummaries.map( ( game, idx ) => (
-          <Card key={`${ idx }`} bordered={false} hoverable style={gameCard} onClick={() => start( game )}>
+          <Card
+            key={`${ idx }`}
+            bordered={false}
+            hoverable
+            style={gameCard}
+            onClick={() => updateGame( { name: game.name, round: 0, letter: null } )}
+          >
             <Title level={3} style={{ color: '#fff' }}>{game.name}</Title>
             <Text style={{ fontSize: 16 }}>
               <span style={labelStyle}>How to play: </span>{game.desc}<br />

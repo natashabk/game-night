@@ -8,7 +8,8 @@ import {
   UPDATE_CHAT_LOG,
   UPDATE_PLAYERS,
   UPDATE_SCORE,
-  RESET_ROOM
+  RESET_ROOM,
+  UPDATE_GAME
 } from './actions';
 
 const initialState = {
@@ -16,7 +17,8 @@ const initialState = {
   chatLog: [],
   username: null,
   avatar: null,
-  error: null
+  error: null,
+  game: null
 }
 
 //for dev
@@ -50,7 +52,12 @@ const devState = {
   chatLog: [],
   username: 'muthie',
   avatar: 'moth',
-  error: null
+  error: null,
+  game: {
+    name: 'Scattergories',
+    round: 2,
+    letter: 'H'
+  }
 }
 
 export default function chatReducer( state, action ) {
@@ -113,6 +120,12 @@ export default function chatReducer( state, action ) {
         let newPlayers = [ ...state.room.players ]
         newPlayers[ action.update.playerIdx ] = updatedPlayer
         state.room.players = newPlayers
+      }
+      break;
+
+    case UPDATE_GAME:
+      if ( state.room !== null && action.update.roomId === state.room.id ) {
+        state.game = action.update.game
       }
       break;
 

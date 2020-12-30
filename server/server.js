@@ -19,7 +19,7 @@ app.get( '/newRoom/:roomName', function ( req, res, next ) {
   // 0 - O and I - l are difficult to distinguish in the app font
   const id = shortid.generate().slice( 0, 7 ).replace( /0|O|I|l/gi, 'A' )
 
-  const room = { name: req.params.roomName, id, players: [] }
+  const room = { name: req.params.roomName, id, players: [], game: null }
   rooms[ id ] = room;
   chatLogs[ id ] = [];
 
@@ -107,6 +107,15 @@ io.on( 'connection', function ( socket ) {
     rooms[ payload.roomId ].players[ payload.playerIdx ].score = payload.score
     const response = JSON.stringify( payload )
     socket.broadcast.emit( 'event://get-score', response );
+  } )
+} );
+
+io.on( 'connection', function ( socket ) {
+  socket.on( 'event://update-game', function ( msg ) {
+    const payload = JSON.parse( msg );
+    rooms[ payload.roomId ].game = payload.game
+    const response = JSON.stringify( payload )
+    socket.broadcast.emit( 'event://get-game', response );
   } )
 } );
 
