@@ -49,3 +49,14 @@ yellow: #FFBE0B (not sure yet)
 .ant-btn-link {
   color: #7b2cbf !important;
 }
+
+.ant-card-hoverable{
+  transition: none !important;
+  -webkit-transition: none !important;
+
+}
+
+.ant-card-hoverable:hover{
+  outline: 1px solid #f0f0f0;
+  box-shadow: 0px 3px 27px 6px #ffffff4f !important;
+}

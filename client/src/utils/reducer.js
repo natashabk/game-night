@@ -23,7 +23,7 @@ const initialState = {
 const devState = {
   room: {
     id: '4_2AhXc',
-    name: 'Kaczmarczyk Party',
+    name: 'Big dog house WROOF',
     players: [
       {
         username: 'deg',
@@ -55,7 +55,7 @@ const devState = {
 
 export default function chatReducer( state, action ) {
   if ( typeof state === 'undefined' ) {
-    return devState
+    return initialState
   }
 
   switch ( action.type ) {
