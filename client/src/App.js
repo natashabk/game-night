@@ -16,7 +16,9 @@ const mainLayout = { ...noBg, padding: 30, minHeight: '100vh', justifyContent: '
 
 const App = () => {
   const [ windowHeight, setWindowHeight ] = useState( window.innerHeight )
+  const [ gameMode, setGameMode ] = useState( false )
   const room = useSelector( state => state.room );
+  const game = useSelector( state => state.game );
   const username = useSelector( state => state.username );
   const avatar = useSelector( state => state.avatar );
   const ws = useContext( WebSocketContext );
@@ -27,20 +29,27 @@ const App = () => {
     return () => window.removeEventListener( 'resize', handleResize );
   }, [] );
 
+  useEffect( () => {
+    if ( game.name === 'Scattergories' && game.round % 2 === 0 ) {
+      console.log( 'game mode' )
+      setGameMode( true )
+    }
+  }, [ game ] )
+
   if ( !room || !username || !avatar ) return <SignIn />
   else ws.addPlayer( room, username, avatar )
 
   return (
     <>
       <Layout style={{ ...noBg, zIndex: 1 }}>
-        <Brand />
+        {!gameMode && <Brand />}
         <Content style={{ ...noBg, padding: 30 }}>
           <Play />
         </Content>
       </Layout>
-      <Sider theme="light" width={300} style={{ background: '#ffffff66', maxHeight: windowHeight - 60 }}>
+      {!gameMode && <Sider theme="light" width={300} style={{ background: '#ffffff66', maxHeight: windowHeight - 60 }}>
         <SocialSider windowHeight={windowHeight} />
-      </Sider>
+      </Sider>}
     </>
   )
 }

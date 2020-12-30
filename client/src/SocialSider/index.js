@@ -12,7 +12,6 @@ const btn = { width: '100%', textAlign: 'center', boxShadow: 'none' }
 const SocialSider = ( { windowHeight } ) => {
   const [ open, setOpen ] = useState( 'chat' )
 
-  console.log( windowHeight )
   return (
     <Col style={{ height: '100%', maxHeight: '100%', display: 'flex', flexDirection: 'column' }}>
       <Heading />

@@ -35,7 +35,7 @@ const Scoreboard = () => {
               <Text style={{ fontSize: 20 }}>{username}</Text>
             </Col>
             <Col span={4} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Text style={{ fontSize: 25, marginRight: 5, color: '#8d21b6' }}>{score}</Text>
+              <Text style={{ fontSize: 25, marginRight: 5, color: '#FF006E' }}>{score}</Text>
             </Col>
             <Col span={5} style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
               <Row type='flex' style={{ flexDirection: 'row', alignItems: 'center' }}>

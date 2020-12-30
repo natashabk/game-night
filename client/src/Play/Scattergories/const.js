@@ -70,8 +70,8 @@ export const categories = [
   [
     'movies',
     'something you see in the zoo',
-    'something you might say while high',
-    'something you might say to convince someone that you\'re not high',
+    'something you\'d say while high',
+    'something you\'d say to convince someone that you\'re not high',
     'video games',
     'band/musician',
     'something that rhymes with "door"',

@@ -12,7 +12,7 @@ const Scattergories = ( { updateGame } ) => {
   const updateLetter = ( letter ) => updateGame( { ...game, letter } )
 
   if ( game.round === 0 ) return <Instructions updateRound={updateRound} />
-  else if ( game.round % 2 === 0 ) return <Board locked={locked} updateRound={updateRound} />
+  else if ( game.round % 2 === 0 ) return <Board locked={locked} updateRound={updateRound} setLocked={setLocked} />
   else return <LetterSelect updateLetter={updateLetter} updateRound={updateRound} />
 
 }
