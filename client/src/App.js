@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Provider, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Layout } from 'antd';
@@ -15,10 +15,17 @@ const noBg = { background: 'none' }
 const mainLayout = { ...noBg, padding: 30, minHeight: '100vh', justifyContent: 'center' }
 
 const App = () => {
+  const [ windowHeight, setWindowHeight ] = useState( window.innerHeight )
   const room = useSelector( state => state.room );
   const username = useSelector( state => state.username );
   const avatar = useSelector( state => state.avatar );
   const ws = useContext( WebSocketContext );
+
+  useEffect( () => {
+    const handleResize = () => setWindowHeight( window.innerHeight );
+    window.addEventListener( 'resize', handleResize );
+    return () => window.removeEventListener( 'resize', handleResize );
+  }, [] );
 
   if ( !room || !username || !avatar ) return <SignIn />
   else ws.addPlayer( room, username, avatar )
@@ -31,8 +38,8 @@ const App = () => {
           <GameMenu />
         </Content>
       </Layout>
-      <Sider theme="light" width={300} style={{ height: 'fit-content' }}>
-        <SocialSider />
+      <Sider theme="light" width={300} style={{ background: '#ffffff66', maxHeight: windowHeight - 60 }}>
+        <SocialSider windowHeight={windowHeight} />
       </Sider>
     </>
   )

@@ -55,7 +55,7 @@ const devState = {
 
 export default function chatReducer( state, action ) {
   if ( typeof state === 'undefined' ) {
-    return initialState
+    return devState
   }
 
   switch ( action.type ) {

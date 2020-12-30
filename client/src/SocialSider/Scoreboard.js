@@ -7,7 +7,9 @@ import { WebSocketContext } from '../utils';
 const { Text } = Typography
 
 const scoreBtn = { fontSize: 12, padding: 0, width: 24, minWidth: 24, height: 24, paddingTop: 2 }
-const rowStyle = ( last ) => ( { marginBottom: 5, borderBottom: last ? 'none' : '1px solid #d9d9d9' } )
+const rowStyle = ( last ) => (
+  { marginBottom: 5, borderBottom: last ? 'none' : '1px solid #d9d9d9', justifyContent: 'space-between' }
+)
 
 const Scoreboard = () => {
   const room = useSelector( state => state.room );
@@ -21,7 +23,7 @@ const Scoreboard = () => {
   }
 
   if ( players ) return (
-    <Col style={{ padding: '15px 15px 0px' }}>
+    <Col style={{ padding: '15px 15px 0px', width: '100%' }}>
       {players.map( ( player, idx ) => {
         const { username, avatar, score } = player
         return (
@@ -33,12 +35,12 @@ const Scoreboard = () => {
               <Text style={{ fontSize: 20 }}>{username}</Text>
             </Col>
             <Col span={4} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Text style={{ fontSize: 25, marginRight: 5, color: '#7b2cbf' }}>{score}</Text>
+              <Text style={{ fontSize: 25, marginRight: 5, color: '#8d21b6' }}>{score}</Text>
             </Col>
             <Col span={5} style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
               <Row type='flex' style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Button
-                  style={scoreBtn}
+                  style={{ ...scoreBtn, marginRight: 2 }}
                   shape='circle'
                   onClick={() => handleChangeScore( idx, '+' )}
                   icon={<PlusOutlined />}

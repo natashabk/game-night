@@ -1,23 +1,36 @@
-import React from 'react';
-import { Collapse } from 'antd'
+import React, { useState } from 'react';
+import { Row, Col, Radio } from 'antd'
 import Heading from './Heading';
 import ScoreBoard from './Scoreboard';
 import Chat from './Chat';
-const { Panel } = Collapse;
+const { Group, Button } = Radio;
+const btnRow = { display: 'flex', width: '100%' }
+const btn = { width: '100%', textAlign: 'center', boxShadow: 'none' }
 
-const SocialSider = () => {
+
+
+const SocialSider = ( { windowHeight } ) => {
+  const [ open, setOpen ] = useState( 'chat' )
+
+  console.log( windowHeight )
   return (
-    <>
+    <Col style={{ height: '100%', maxHeight: '100%', display: 'flex', flexDirection: 'column' }}>
       <Heading />
-      <Collapse defaultActiveKey={[ '2' ]} accordion={true}>
-        <Panel header="Scoreboard" key="1">
-          <ScoreBoard />
-        </Panel>
-        <Panel header="Chat" key="2">
-          <Chat />
-        </Panel>
-      </Collapse>
-    </>
+      <Row>
+        <Group value={open} onChange={( e ) => setOpen( e.target.value )} style={btnRow}>
+          <Col span={12}>
+            <Button style={btn} value="chat">Chat</Button>
+          </Col>
+          <Col span={12}>
+            <Button style={btn} value="score">Scoreboard</Button>
+          </Col>
+        </Group>
+      </Row>
+      <Row style={{ display: 'flex', flexGrow: 2, border: '1px solid #fff', borderTop: 'none', maxHeight: windowHeight - 147 }}>
+        {open === 'score' && <ScoreBoard />}
+        {open === 'chat' && <Chat />}
+      </Row>
+    </Col>
   )
 }
 

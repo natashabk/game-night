@@ -18,6 +18,16 @@ yellow: #FFBE0B (not sure yet)
   overflow-y: scroll;
   overscroll-behavior-y: contain;
   scroll-snap-type: y proximity;
+  display: flex;
+  flex-grow: 1;
+}
+
+.chatBox::-webkit-scrollbar {
+  background: transparent;
+  width: 4px;
+}
+.chatBox::-webkit-scrollbar-thumb {
+  background: #fff;
 }
 
 .chatBox > div > div:last-child {
@@ -36,11 +46,6 @@ yellow: #FFBE0B (not sure yet)
   min-width: 600
 }
 
-.ant-collapse-content-box {
-  padding: 0px 0px 8px 8px !important;
-}
-
-
 /* temporary fix - change these once you add a real theme */
 .ant-btn-primary {
   background-color: #7b2cbf !important;
@@ -53,10 +58,23 @@ yellow: #FFBE0B (not sure yet)
 .ant-card-hoverable{
   transition: none !important;
   -webkit-transition: none !important;
-
 }
 
 .ant-card-hoverable:hover{
   outline: 1px solid #f0f0f0;
   box-shadow: 0px 3px 27px 6px #ffffff4f !important;
+}
+
+.ant-radio-button-wrapper{
+  background: #ffffff4f !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 0px !important;
+  border-bottom: 1px solid #fff !important;
+}
+.ant-radio-button-wrapper.ant-radio-button-wrapper-checked{
+  background: transparent !important;
+  color: #fff !important;
+  border: 1px solid #fff !important;
+  border-bottom: none !important;
 }

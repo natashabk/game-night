@@ -20,21 +20,21 @@ const Chat = () => {
   }
 
   return (
-    <div>
+    <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
       <div className='chatBox'>
-        <Col style={{ height: "500px", padding: "10px", background: 'white' }}>
+        <Col style={{ padding: "10px" }}>
           {chats ? chats.map( ( msg, idx ) => <Message key={idx} msg={msg} /> ) : null}
         </Col>
       </div>
-      <Row style={{ paddingRight: 10 }}>
-        <Col span={19}>
+      <Row style={{ height: 32, display: 'flex' }}>
+        <Col span={19} style={{ marginRight: -2 }}>
           <Input
             value={message}
             onChange={( e ) => setMessage( e.target.value )}
             onPressEnter={sendMessage}
           />
         </Col>
-        <Col span={5}>
+        <Col span={5} style={{ marginRight: 2 }}>
           <Button type='primary' onClick={sendMessage}>Send</Button>
         </Col>
       </Row>
