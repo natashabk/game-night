@@ -1,27 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
-import Timer from 'simple-circle-timer'
-import { Row, Col, Input, Typography, Divider, Card, Checkbox } from 'antd';
+import { Row, Col, Input, Typography, Divider, Checkbox } from 'antd';
 import { categories } from './const'
-const { Text, Title } = Typography
+import { WebSocketContext } from '../../utils';
+import LetterClock from './LetterClock'
+const { Title } = Typography
 const categoryCol = { textAlign: 'right', color: '#fff', paddingRight: 10, fontSize: 16 }
-const Board = ( { locked, updateRound, setLocked } ) => {
+
+const Board = ( { updateRound } ) => {
+  const [ locked, setLocked ] = useState( false )
   const [ filledOut, setFilledOut ] = useState( [] )
   const [ total, setTotal ] = useState( filledOut.length )
+
   const game = useSelector( state => state.game );
+  const players = useSelector( state => state.room.players );
+  const roomId = useSelector( state => state.room.id );
+  const name = useSelector( state => state.username );
+
+  const ws = useContext( WebSocketContext );
+
+  const player = players.find( item => item.username === name )
+  const playerIdx = players.indexOf( player )
 
   const handlePointChange = ( e ) => {
     const point = e.target.checked
-    if ( point ) setTotal( total + 1 )
-    else setTotal( total - 1 )
+    let newScore = player.score
+    if ( point ) {
+      setTotal( total + 1 )
+      newScore++;
+    }
+    else {
+      setTotal( total - 1 )
+      newScore--;
+    }
+    ws.changeScore( roomId, playerIdx, newScore )
   }
 
   const addPoints = ( e, idx ) => {
     const field = e.target.value
-    if ( field && !filledOut.includes( idx ) ) {
+    if ( field && !filledOut.includes( idx ) ) { //add point for filling out field
       setFilledOut( [ ...filledOut, idx ] )
     }
-    else if ( !field ) {
+    else if ( !field ) { //if user clears the field during gameplay, remove point
       let filled = filledOut
       filled.splice( filled.indexOf( idx ), 1 )
       setFilledOut( filled )
@@ -32,33 +52,17 @@ const Board = ( { locked, updateRound, setLocked } ) => {
     setTotal( filledOut.length )
   }, [ filledOut ] )
 
-  //<Button onClick={() => updateRound( game.round + 1 )}>Next Round</Button>
+  useEffect( () => {
+    if ( locked ) ws.changeScore( roomId, playerIdx, player.score + filledOut.length )
+  }, [ locked ] )
+
   return (
     <>
-      <Card style={{ background: '#ffffff4d', marginBottom: 20, width: 200, position: 'fixed' }} bodyStyle={{ padding: 16 }}>
-        <Row justify='center' style={{ textAlign: 'center' }}>
-          <Title level={3} style={{ color: '#fff' }}>Round {game.round - 1}</Title>
-        </Row>
-        <Row type='flex' justify='space-between' style={{ alignItems: 'center' }}>
-          <Col style={{ textAlign: 'center', marginTop: -10 }}>
-            <Text style={{ color: '#fff' }}>Letter</Text>
-            <Title level={1} style={{ background: '#FF006E', margin: 0, borderRadius: 4, textAlign: 'center', fontSize: 45, padding: '0px 10px', color: '#fff' }}>
-              {game.letter}
-            </Title>
-          </Col>
-          <Timer
-            size={80}
-            fontSize={20}
-            minutes={0.22}
-            fillColor={'#FF006E'}
-            onComplete={() => setLocked( true )}
-          />
-        </Row>
-      </Card>
+      <LetterClock locked={locked} setLocked={setLocked} updateRound={updateRound} />
       <Row style={{ width: 650, margin: 'auto' }}>
         <Divider style={{ borderTop: '1px solid #ffffff8c', margin: '8px 0px' }} />
       </Row>
-      {categories[ game.round - 1 ].map( ( category, idx ) => (
+      {categories[ ( game.round / 2 ) - 1 ].map( ( category, idx ) => (
         <Row style={{ width: 650, margin: 'auto' }} key={`${ idx }`}>
           <Col span={locked ? 17 : 18} style={categoryCol}>{category}</Col>
           <Col span={6}>

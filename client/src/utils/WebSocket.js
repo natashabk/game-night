@@ -57,7 +57,6 @@ export default ( { children } ) => {
       const payload = JSON.parse( resp )
       dispatch( updateGame( payload ) )
     } )
-
     ws = { socket: socket, sendMessage, addPlayer, changeScore, changeGame }
   }
 

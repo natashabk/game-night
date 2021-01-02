@@ -13,7 +13,6 @@ const { Sider, Content } = Layout;
 
 const noBg = { background: 'none' }
 const mainLayout = { ...noBg, padding: 30, minHeight: '100vh', justifyContent: 'center' }
-
 const App = () => {
   const [ windowHeight, setWindowHeight ] = useState( window.innerHeight )
   const [ gameMode, setGameMode ] = useState( false )
@@ -23,6 +22,8 @@ const App = () => {
   const avatar = useSelector( state => state.avatar );
   const ws = useContext( WebSocketContext );
 
+  const side = { background: '#ffffff66', maxHeight: windowHeight - 60 }
+
   useEffect( () => {
     const handleResize = () => setWindowHeight( window.innerHeight );
     window.addEventListener( 'resize', handleResize );
@@ -30,8 +31,7 @@ const App = () => {
   }, [] );
 
   useEffect( () => {
-    if ( game.name === 'Scattergories' && game.round % 2 === 0 ) {
-      console.log( 'game mode' )
+    if ( game && game.name === 'Scattergories' && game.round % 2 === 0 ) {
       setGameMode( true )
     }
   }, [ game ] )
@@ -47,9 +47,11 @@ const App = () => {
           <Play />
         </Content>
       </Layout>
-      {!gameMode && <Sider theme="light" width={300} style={{ background: '#ffffff66', maxHeight: windowHeight - 60 }}>
-        <SocialSider windowHeight={windowHeight} />
-      </Sider>}
+      {!gameMode &&
+        <Sider theme="light" width={300} style={side}>
+          <SocialSider windowHeight={windowHeight} />
+        </Sider>
+      }
     </>
   )
 }

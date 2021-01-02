@@ -55,7 +55,7 @@ const Help = ( { setHelpOpen } ) => {
       </Row>
       {faq.map( q => {
         return (
-          <Row style={{ marginBottom: 5 }}>
+          <Row key={q.label} style={{ marginBottom: 5 }}>
             <Text style={{ fontSize: 16 }}>
               <span style={labelStyle}><QuestionCircleFilled />{q.label}</span>
               {styleText( q.text )}

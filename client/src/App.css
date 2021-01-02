@@ -48,11 +48,11 @@ yellow: #FFBE0B (not sure yet)
 
 /* temporary fix - change these once you add a real theme */
 .ant-btn-primary {
-  background-color: #7b2cbf !important;
-  border-color: #7b2cbf !important;
+  background-color: #FF006E !important;
+  border-color: #FF006E !important;
 }
 .ant-btn-link {
-  color: #7b2cbf !important;
+  color: #FF006E !important;
 }
 
 .ant-card-hoverable{
