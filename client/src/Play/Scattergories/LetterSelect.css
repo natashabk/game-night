@@ -1,0 +1,30 @@
+.spinWrapper {
+  position: relative;
+  height: 100px;
+  width: 100px; 
+  background: #fff;
+  overflow: hidden;
+}
+
+.letter { 
+  height: 100px; 
+  font-size: 60px; 
+  padding-left: 30px; 
+  border: 1px solid black; 
+  position: relative;
+  animation: moveup 5s 1;
+  animation-fill-mode: forwards;
+}
+
+.letter-fake{
+  height: 100px; 
+  font-size: 60px; 
+  padding-left: 30px; 
+  border: 1px solid black; 
+  position: relative;
+}
+
+@keyframes moveup {
+  from {bottom: 0px;}
+  to {bottom: 2500px;}
+}

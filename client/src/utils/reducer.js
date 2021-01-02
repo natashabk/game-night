@@ -55,14 +55,14 @@ const devState = {
   error: null,
   game: {
     name: 'Scattergories',
-    round: 2,
+    round: 3,
     letter: 'H'
   }
 }
 
 export default function chatReducer( state, action ) {
   if ( typeof state === 'undefined' ) {
-    return initialState
+    return devState
   }
 
   switch ( action.type ) {
