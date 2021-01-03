@@ -9,19 +9,14 @@
 .letter { 
   height: 100px; 
   font-size: 60px; 
-  padding-left: 30px; 
   border: 1px solid black; 
   position: relative;
-  animation: moveup 5s 1;
-  animation-fill-mode: forwards;
+  text-align: center;
 }
 
-.letter-fake{
-  height: 100px; 
-  font-size: 60px; 
-  padding-left: 30px; 
-  border: 1px solid black; 
-  position: relative;
+.letter.spin{
+  animation: moveup 5s 1;
+  animation-fill-mode: forwards;
 }
 
 @keyframes moveup {

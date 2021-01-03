@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { WebSocketContext } from '../utils';
+import { WebSocketContext, bgSpin } from '../utils';
 import Scattergories from './Scattergories'
 import GameMenu from './GameMenu'
 const Play = () => {
@@ -9,6 +9,8 @@ const Play = () => {
   const ws = useContext( WebSocketContext );
 
   const handleGameUpdate = ( game ) => { ws.changeGame( roomId, game ) }
+
+  bgSpin( 'stop' );
 
   if ( currentGame && currentGame.name === 'Scattergories' ) {
     return <Scattergories updateGame={handleGameUpdate} />

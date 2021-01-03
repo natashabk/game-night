@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom';
 import { Card, Row } from 'antd';
 import Brand from '../Brand';
-import { checkRoom } from '../utils';
+import { checkRoom, bgSpin } from '../utils';
 import CreateOrJoinRoom from './CreateOrJoinRoom'
 import CreateUserName from './CreateUsername'
 
@@ -22,6 +22,8 @@ const SignIn = () => {
   const avatar = useSelector( state => state.avatar );
   const err = useSelector( state => state.error );
   const dispatch = useDispatch();
+
+  bgSpin( 'start' );
 
   useEffect( () => {
     //check for room validity if attempted to enter straight from url

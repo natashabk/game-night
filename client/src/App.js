@@ -42,12 +42,13 @@ const App = () => {
   return (
     <>
       <Layout style={{ ...noBg, zIndex: 1 }}>
-        {!gameMode && <Brand />}
-        <Content style={{ ...noBg, padding: gameMode ? 0 : 30 }}>
+        <Brand gameMode={gameMode} />
+        <Content style={{ ...noBg, padding: gameMode ? 0 : 30, display: 'flex' }}>
           <Play />
         </Content>
       </Layout>
-      {!gameMode &&
+      {
+        !gameMode &&
         <Sider theme="light" width={300} style={side}>
           <SocialSider windowHeight={windowHeight} />
         </Sider>
@@ -61,8 +62,8 @@ const AppWrapper = () => {
     <Router>
       <Provider store={store}>
         <WebSocketProvider>
-          <div className='bgCircle'>
-            <Circle style={{ height: '100%' }} />
+          <div className='bgCircleWrap'>
+            <Circle style={{ height: '100%' }} className='bgCircle' />
           </div>
           <Layout style={mainLayout}>
             <Switch>

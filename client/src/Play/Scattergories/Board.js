@@ -57,7 +57,7 @@ const Board = ( { updateRound } ) => {
   }, [ locked ] )
 
   return (
-    <>
+    <div style={{ width: '100%' }}>
       <LetterClock locked={locked} setLocked={setLocked} updateRound={updateRound} />
       <Row style={{ width: 650, margin: 'auto' }}>
         <Divider style={{ borderTop: '1px solid #ffffff8c', margin: '8px 0px' }} />
@@ -77,7 +77,7 @@ const Board = ( { updateRound } ) => {
         </Row>
       ) )}
       {locked ? <Title level={2} style={{ color: 'white', textAlign: 'center' }}>ROUND TOTAL: {total}</Title> : null}
-    </>
+    </div>
   )
 }
 

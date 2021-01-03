@@ -27,7 +27,7 @@ const Help = ( { setHelpOpen } ) => {
     },
     {
       label: ' If you can\'t get on a video call: ',
-      text: " All games are manageable without video, although live reactions make it a lot more fun! There will be in-game tips for anyone in the group who needs to work around it."
+      text: " All games are manageable using only audio and the chat, although live reactions make it a lot more fun!"
     }
   ]
 

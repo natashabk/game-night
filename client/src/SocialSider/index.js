@@ -6,14 +6,13 @@ import Chat from './Chat';
 const { Group, Button } = Radio;
 const btnRow = { display: 'flex', width: '100%' }
 const btn = { width: '100%', textAlign: 'center', boxShadow: 'none' }
-
-
+const colStyle = { height: '100%', maxHeight: '100%', display: 'flex', flexDirection: 'column' }
+const mainContent = { display: 'flex', flexGrow: 2, border: '1px solid #fff', borderTop: 'none' }
 
 const SocialSider = ( { windowHeight } ) => {
   const [ open, setOpen ] = useState( 'chat' )
-
   return (
-    <Col style={{ height: '100%', maxHeight: '100%', display: 'flex', flexDirection: 'column' }}>
+    <Col style={colStyle}>
       <Heading />
       <Row>
         <Group value={open} onChange={( e ) => setOpen( e.target.value )} style={btnRow}>
@@ -25,7 +24,7 @@ const SocialSider = ( { windowHeight } ) => {
           </Col>
         </Group>
       </Row>
-      <Row style={{ display: 'flex', flexGrow: 2, border: '1px solid #fff', borderTop: 'none', maxHeight: windowHeight - 147 }}>
+      <Row style={{ ...mainContent, maxHeight: windowHeight - 147 }}>
         {open === 'score' && <ScoreBoard />}
         {open === 'chat' && <Chat />}
       </Row>
