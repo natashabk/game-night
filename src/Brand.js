@@ -18,18 +18,10 @@ const subtitleStyle = { color: 'white', padding: 5, borderRadius: 3 }
 
 const Brand = ( { gameMode } ) => {
   const err = useSelector( state => state.error );
-  const room = useSelector( state => state.room );
-  const username = useSelector( state => state.username );
 
   const subtitle = () => {
     if ( err ) {
       return <Text style={{ ...subtitleStyle, background: '#FF006E' }}>Error: {err.error}</Text>
-    } else if ( room && room.name && username ) {
-      return ( //only show this after the username form
-        <Text style={subtitleStyle}>
-          Room: <span style={{ fontWeight: 600 }}>{room.name}</span>
-        </Text>
-      )
     } else return null
   }
 

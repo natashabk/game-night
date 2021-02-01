@@ -30,12 +30,11 @@ const createRoomRequest = () => ( { type: CREATE_ROOM_REQUEST } )
 const createRoomSuccess = ( payload ) => ( { type: CREATE_ROOM_SUCCESS, payload } )
 const createRoomError = ( error ) => ( { type: CREATE_ROOM_ERROR, error } )
 
-export function createRoom( roomName ) {
-
+export function createRoom() {
   return async function ( dispatch ) {
     dispatch( createRoomRequest() );
     try {
-      const resp = await axios.get( `${ API }/newRoom/${ roomName }` )
+      const resp = await axios.get( `${ API }/newRoom` )
       dispatch( createRoomSuccess( resp.data ) );
     } catch ( error ) {
       dispatch( createRoomError( error ) );
@@ -72,7 +71,7 @@ export function checkRoom( roomId ) {
         dispatch( checkRoomError( resp.data.error ) )
       } else dispatch( checkRoomSuccess( resp.data ) )
     } catch ( error ) {
-      dispatch( checkRoomError( { error } ) );
+      dispatch( checkRoomError( ( error ) ) );
     }
   }
 }

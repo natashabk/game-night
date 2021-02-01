@@ -5,12 +5,11 @@ import { createRoom, checkRoom } from '../utils';
 import { lightWhite, inputStyle, btnStyle } from './index'
 
 const CreateOrJoinRoom = () => {
-  const [ roomName, setRoomName ] = useState();
   const [ roomId, setRoomId ] = useState();
   const dispatch = useDispatch();
 
   const createNewRoom = () => {
-    dispatch( createRoom( roomName ) )
+    dispatch( createRoom() )
   }
 
   const checkRoomId = () => {
@@ -20,14 +19,6 @@ const CreateOrJoinRoom = () => {
   return (
     <>
       <Row>
-        <Input
-          size="large"
-          maxLength={20}
-          placeholder="Enter a short name for your group"
-          onChange={( e ) => setRoomName( e.target.value )}
-          onPressEnter={() => createNewRoom()}
-          style={inputStyle}
-        />
         <Button type='primary' onClick={() => createNewRoom()} style={btnStyle}>
           Create new room
         </Button>
