@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Input, Button, Divider, Row } from 'antd';
 import { useDispatch } from 'react-redux'
 import { createRoom, checkRoom } from '../utils';
-import { lightWhite, inputStyle, btnStyle } from './index'
+import { lightWhite } from './index'
 
 const CreateOrJoinRoom = () => {
   const [ roomId, setRoomId ] = useState();
@@ -18,22 +18,22 @@ const CreateOrJoinRoom = () => {
 
   return (
     <>
-      <Row>
-        <Button type='primary' onClick={() => createNewRoom()} style={btnStyle}>
+      <Row justify='center'>
+        <Button type='primary' onClick={() => createNewRoom()} style={{ height: 40, width: 200 }}>
           Create new room
         </Button>
       </Row>
       <Divider style={{ background: lightWhite }} />
-      <Row>
+      <Row justify='center'>
         <Input
           size="large"
           placeholder="Enter room ID"
           onChange={( e ) => setRoomId( e.target.value )}
           onPressEnter={() => checkRoomId()}
-          style={inputStyle}
+          style={{ maxWidth: 140 }}
         />
-        <Button type='primary' onClick={() => checkRoomId()} style={btnStyle}>
-          Join room
+        <Button type='primary' onClick={() => checkRoomId()} style={{ height: 40, width: 60 }}>
+          Join
         </Button>
       </Row>
     </>
