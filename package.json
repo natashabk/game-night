@@ -8,10 +8,12 @@
     "@testing-library/user-event": "^7.1.2",
     "antd": "^4.8.4",
     "axios": "^0.21.1",
+    "browserslist": "^4.16.5",
     "immer": "^8.0.1",
     "is-svg": "^4.3.1",
     "node-notifier": "^8.0.1",
     "object-path": "^0.11.5",
+    "postcss": "^8.2.10",
     "r": "0.0.5",
     "react": "^16.13.0",
     "react-dev-utils": "^11.0.4",
@@ -27,7 +29,10 @@
     "serve": "^11.3.2",
     "simple-circle-timer": "^0.1.19",
     "socket.io-client": "^2.3.0",
-    "ssri": "^6.0.2"
+    "sockjs": "^0.3.20",
+    "ssri": "^6.0.2",
+    "ws": "^6.2.2",
+    "xmlhttprequest-ssl": "^1.6.2"
   },
   "scripts": {
     "start": "react-scripts start",
