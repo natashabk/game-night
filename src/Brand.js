@@ -17,7 +17,7 @@ const subtitleStyle = { color: 'white', padding: 5, borderRadius: 3 }
 
 const Brand = ( { gameMode } ) => {
   const err = useSelector( state => state.error );
-  const room = useSelector(state => state.room.id);
+  const room = useSelector(state => state.room);
 
   const subtitle = () => {
     if ( err ) {
