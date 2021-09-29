@@ -17,7 +17,7 @@ const subtitleStyle = { color: 'white', padding: 5, borderRadius: 3 }
 
 const Brand = ( { gameMode } ) => {
   const err = useSelector( state => state.error );
-  const room = useSelector(state => state.room);
+  const pastLogin = useSelector(state => state.username);
 
   const subtitle = () => {
     if ( err ) {
@@ -25,8 +25,9 @@ const Brand = ( { gameMode } ) => {
     } else return null
   }
 
-  if ( gameMode || room) return <Logo style={{ height: 40, width: 40, margin: '-10px 0px 10px' }} />
-    
+  if ( gameMode || pastLogin ) {
+    return <Logo style={{ height: 40, width: 40, margin: '-10px 0px 10px' }} />
+  }
 
   return (
     <Header style={{ ...headerStyle, zIndex: 1 }}>
