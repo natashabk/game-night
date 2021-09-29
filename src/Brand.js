@@ -15,6 +15,9 @@ const titleStyle = {
 }
 const subtitleStyle = { color: 'white', padding: 5, borderRadius: 3 }
 
+const logoStyle = { height: 40, width: 40, margin: '-10px 0px 10px 30px', opacity: '0.3' }
+
+
 const Brand = ( { gameMode } ) => {
   const err = useSelector( state => state.error );
   const pastLogin = useSelector(state => state.username);
@@ -26,7 +29,7 @@ const Brand = ( { gameMode } ) => {
   }
 
   if ( gameMode || pastLogin ) {
-    return <Logo style={{ height: 40, width: 40, margin: '-10px 0px 10px' }} />
+    return <Logo style={logoStyle} className='logo-light' />
   }
 
   return (
