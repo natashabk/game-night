@@ -9,7 +9,6 @@ const headerStyle = { background: 'none', height: 80, lineHeight: 'unset', textA
 const titleStyle = {
   color: 'white',
   textAlign: 'center',
-  maxWidth: 1300,
   marginBottom: 0,
   fontSize: 40,
   fontWeight: 400
