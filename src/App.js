@@ -42,7 +42,7 @@ const App = () => {
   return (
     <>
       <Layout style={{ ...noBg, zIndex: 1 }}>
-        <Brand gameMode={gameMode} />
+        <Brand gameMode={gameMode}/>
         <Content style={{ ...noBg, padding: gameMode ? 0 : 30, display: 'flex' }}>
           <Play />
         </Content>
