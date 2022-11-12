@@ -34,7 +34,7 @@
     "serve": "^11.3.2",
     "simple-circle-timer": "^0.1.19",
     "socket.io-client": "^4.5.2",
-    "socket.io-parser": "^3.3.2",
+    "socket.io-parser": "^3.3.3",
     "sockjs": "^0.3.20",
     "ssri": "^6.0.2",
     "ws": "^6.2.2",
