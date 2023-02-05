@@ -8,7 +8,7 @@ const WebSocketContext = createContext( null )
 
 export { WebSocketContext }
 
-export default ( { children } ) => {
+const WebSocket = ( { children } ) => {
   let socket;
   let ws;
 
@@ -68,3 +68,5 @@ export default ( { children } ) => {
     </WebSocketContext.Provider>
   )
 }
+
+export default WebSocket
